@@ -1,0 +1,54 @@
+{% extends 'authapp/base.html'%}
+
+{%block content%}
+<form method="POST">
+    {% csrf_token %}
+    <p>
+        <input type="text" name="username" autofocus=""
+               autocapitalize="none" autocomplete="username"
+               maxlength="150" class="textinput textInput form-control"
+               required="" id="id_username" placeholder="Username">
+    </p>
+    <p>
+        <input type="password" name="password1"
+               autocomplete="current-password"
+               class="textinput textInput form-control" required=""
+               id="id_password1" placeholder="Password">
+    </p>
+      <p>
+        <input type="password" name="password2"
+               autocomplete="current-password"
+               class="textinput textInput form-control" required=""
+               id="id_password2" placeholder="Confirm Password">
+    </p>
+    <p>
+        <button type="submit"
+                class="btn btn-primary btn-block">Зарегистрироваться
+        </button>
+    </p>
+</form>
+<p>
+<div class="row justify-content-between">
+    <div class="col">
+        <a href="{% url 'authapp:login'%}" class="text-light">Войти</a>
+    </div>
+
+</div>
+</p>
+
+
+{%endblock%}
+
+{%block js%}
+<!-- Toasts -->
+<script>
+$(document).ready(function () {
+{% if messages %}
+// Toasts
+$(".toast").toast({ delay: 5000 });
+$(".toast").toast("show");
+{% endif %}
+});
+
+</script>
+{%endblock%}

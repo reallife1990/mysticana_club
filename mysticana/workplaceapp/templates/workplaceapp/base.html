@@ -1,0 +1,77 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
+	<link rel="stylesheet" href="{% static 'css/style.css' %} ">
+
+    <!-- ChartJS -->
+    <link rel="stylesheet" href="{% static 'css/Chart.min.css' %} ">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="{% static 'css/fontawesome.all.min.css' %} ">
+
+    <title>Welcome to Braniac!</title>
+</head>
+
+<body class="new">
+
+
+
+{% include 'workplaceapp/includes/inc_menu.html' %}
+
+
+
+
+    <div class="container-md">
+    {% block content %}
+        {% endblock %}
+
+    </div>
+
+
+
+
+
+    <!-- Footer -->
+
+    <div class="container-lg mt-auto">
+        <hr>
+
+        <div class="row justify-content-center">
+            <div>
+                <p><small>&copy; Reallife 2023</small></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Footer -->
+
+
+
+
+    <!-- JavaScript section -->
+    <!-- Bootstrap -->
+    <script src="{% static 'js/jquery-3.6.0.min.js'%}"></script>
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+
+    <!-- ChartJs -->
+    <script src="{% static 'js/Chart.min.js'%}"></script>
+
+    <!-- FontAwesome -->
+    <script src="{% static 'js/fontawesome.all.min.js'%}"></script>
+
+
+
+</body>
+
+</html>
