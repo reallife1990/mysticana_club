@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'mainapp',
     'authapp',
     'workplaceapp',
+
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +140,5 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 AUTH_USER_MODEL = 'authapp.User'
 LOGIN_REDIRECT_URL = 'mainapp:index'
 LOGOUT_REDIRECT_URL = 'mainapp:index'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
