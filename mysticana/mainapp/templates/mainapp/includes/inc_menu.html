@@ -17,10 +17,11 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="{% url 'mainapp:services'%}">Услуги</a>
                     </li>
+                   {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="ddProfile" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            Профиль
+                            {{user.first_name|default:user.username}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="ddProfile">
                             <a class="dropdown-item" href="{% url 'workplaceapp:main'%}">Редактировать профиль</a>
@@ -29,10 +30,14 @@
                             <a class="dropdown-item" href="#">Модерация</a>
                             <a class="dropdown-item" href="#">Административный раздел</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Выход</a>
+                            <a class="dropdown-item" href="{% url 'authapp:logout'%}">Выход</a>
                         </div>
                     </li>
-
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'authapp:login' %}">Войти</a>
+                        </li>
+                    {% endif %}
                 </ul>
                 <span><a href="#">🇷🇺</a> <i class="fas fa-grip-lines-vertical"></i> <a href="#">🇬🇧</a></span>
             </div>
