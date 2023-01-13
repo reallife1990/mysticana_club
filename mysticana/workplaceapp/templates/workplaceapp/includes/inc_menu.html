@@ -71,12 +71,12 @@
                         <a class="nav-link" href="{% url 'mainapp:news'%}">Экспресс-расчёты</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="{% url 'mainapp:index'%}">Выход</a>
+                        <a class="nav-link" href="{% url 'authapp:logout'%}">Выход</a>
                     </li>
 
 
                 </ul>
-                <span><h4 class="brand">USER</h4></span>
+                <span><h4 class="brand">{{user.first_name|default:user.username}}</h4></span>
             </div>
         </div>
     </nav>
