@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 # Create your views here.
-from authapp.forms import CustomUserCreationForm
+from authapp.forms import CustomUserCreationForm, CustomUserChangeForm
 from authapp.models import User
 
 
@@ -23,6 +23,19 @@ class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = "authapp/register.html"
     success_url = reverse_lazy('mainapp:index')
+
+
+class CustomEditView(UpdateView):
+    model = User
+    form_class = CustomUserChangeForm
+    template_name = 'authapp/edit.html'
+
+    # success_url  для edit, update, create обязательный
+    def get_success_url(self):
+        return reverse_lazy('authapp:edit', args=[self.request.user.id])
+
+    def get_object(self, queryset=None):  # ограничение на редактирование только своего профиля
+        return self.request.user
 
 
 # class RegisterView(TemplateView):
@@ -55,6 +68,7 @@ class RegisterView(CreateView):
 #             return HttpResponseRedirect(reverse('authapp:register'))
 #
 #
+
 
 
 class EditView(TemplateView):

@@ -140,5 +140,6 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 AUTH_USER_MODEL = 'authapp.User'
 LOGIN_REDIRECT_URL = 'mainapp:index'
 LOGOUT_REDIRECT_URL = 'mainapp:index'
+LOGIN_URL = 'authapp:login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
