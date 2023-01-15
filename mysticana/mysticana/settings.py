@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mainapp',
     'authapp',
     'workplaceapp',
+    'clientapp',
 
     'crispy_forms',
 ]
@@ -143,3 +144,14 @@ LOGOUT_REDIRECT_URL = 'mainapp:index'
 LOGIN_URL = 'authapp:login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = "mysticana_club@mail.ru"
+EMAIL_HOST_PASSWORD = "AQGve1bAwtZL6h6n4je6"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+#errors send
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

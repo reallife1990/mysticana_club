@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mainapp.urls', namespace='mainapp')),
     path('workplace/', include('workplaceapp.urls', namespace='workplaceapp')),
-    path('authapp/', include('authapp.urls', namespace='authapp'))
+    path('authapp/', include('authapp.urls', namespace='authapp')),
+    path('client/', include('clientapp.urls', namespace='clientapp'))
 ]
 
 

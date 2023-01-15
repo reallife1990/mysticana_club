@@ -1,0 +1,46 @@
+{% extends 'authapp/base.html'%}
+{% load crispy_forms_tags%}
+{%block content%}
+<form method="POST">
+    {% csrf_token %}
+    <p>
+мроомдовмдопв
+    </p>
+    <p>
+<input type="text" name="conf_code" autofocus=""
+autocapitalize="none"
+maxlength="150" class="textinput textInput form-control"
+required="" id="id_username" placeholder="Проверочный код">
+</p>
+
+    <p>
+        <button type="submit"
+                class="btn btn-primary btn-block">Подтвердить
+        </button>
+    </p>
+</form>
+<p>
+<div class="row justify-content-between">
+    <div class="col">
+        <a href="{% url 'authapp:login'%}" class="text-light">Войти</a>
+    </div>
+
+</div>
+</p>
+
+
+{%endblock%}
+
+{%block js%}
+<!-- Toasts -->
+<script>
+$(document).ready(function () {
+{% if messages %}
+// Toasts
+$(".toast").toast({ delay: 5000 });
+$(".toast").toast("show");
+{% endif %}
+});
+
+</script>
+{%endblock%}

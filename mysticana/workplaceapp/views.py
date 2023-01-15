@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.conf import settings
+from django.core.mail import send_mail
+
 
 # Create your views here.
 from django.shortcuts import render
@@ -32,7 +35,6 @@ class ControlAccess(AccessMixin):
 
 class MainView(ControlAccess, TemplateView):
     template_name = 'workplaceapp/index.html'
-
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()
