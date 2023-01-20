@@ -30,7 +30,7 @@
                             <div class="dropdown-divider"></div>
                             {%endif%}
                             {%if user.confirm_email == False%}
-                            <a class="dropdown-item" href="{% url 'authapp:confirm' %}">Подтвердить Email</a>
+                            <a class="dropdown-item" href="#">Подтвердить Email</a>
                             {%else%}
                             <a class="dropdown-item" href="{% url 'authapp:edit' %}">Редактировать профиль</a>
                             {%endif%}

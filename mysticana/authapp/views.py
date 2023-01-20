@@ -1,22 +1,23 @@
-
-
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import authenticate, login, get_user_model
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpRequest
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, CreateView, UpdateView
-# Create your views here.
-from authapp.forms import CustomUserCreationForm, CustomUserChangeForm
+from django.views.generic import TemplateView, CreateView, UpdateView,View
+from django.core.exceptions import ValidationError
+from authapp.forms import CustomUserCreationForm, CustomUserChangeForm,AuthenticationForm
 from authapp.models import User
-from random import randint
-
+from django.utils.http import urlsafe_base64_decode
+from django.shortcuts import redirect
+from authapp.utils import send_email_for_verify
+from django.contrib.auth.tokens import default_token_generator as \
+    token_generator
 
 class CustomLoginView(LoginView):
+    form_class = AuthenticationForm
     template_name = "authapp/login.html"
     extra_context = {'title': "Вход"}
-
-
 
 class CustomLogoutView(LogoutView):
     pass
@@ -26,7 +27,8 @@ class RegisterView(CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "authapp/register.html"
-    success_url = reverse_lazy('mainapp:index')
+    # переадресовать что б проверили почту
+    success_url = reverse_lazy('mainapp:index') # переадресовать что б проверили почту
 
 
 class CustomEditView(UpdateView):
@@ -42,88 +44,32 @@ class CustomEditView(UpdateView):
         return self.request.user
 
 
-# class RegisterView(TemplateView):
-#     template_name = "authapp/register.html"
-#     extra_context = {'title':"Регистрация"}
-#
-#     def post(self, request, *args, **kwargs):
-#         try:
-#             if all(
-#                     (request.POST.get('username'),
-#                     request.POST.get('email'),
-#                     request.POST.get('first_name'),
-#                     request.POST.get('password1') == request.POST.get('password2')
-#                     )
-#             ):
-#                 new_user= User.objects.create(
-#                     username=request.POST.get('username'),
-#                     first_name=request.POST.get('first_name'),
-#                     email=request.POST.get('email')
-#                     )
-#                 new_user.set_password(request.POST.get('password1'))
-#                 new_user.save()
-#                 messages.add_message(request, messages.INFO,'Регистрация прошла успешно')
-#                 return HttpResponseRedirect(reverse('authapp:login'))
-#             else:
-#                 messages.add_message(request, messages.WARNING, 'что-то не так1')
-#                 return HttpResponseRedirect(reverse('authapp:register'))
-#         except Exception as ex:
-#             messages.add_message(request, messages.WARNING,'что-то не так2')
-#             return HttpResponseRedirect(reverse('authapp:register'))
-#
-#
-
-
 
 class EditView(TemplateView):
     pass
 
 
-def generate_code():
-    return str(randint(10000, 99999))
+class VerifyView(View):
+    def get(self, request, uidb64, token):
+        user = self.get_user(uidb64)
 
-class ConfirmEmailView(TemplateView):
-    template_name = 'authapp/confirm_email.html'
-    extra_context = {'title': "Подтверждение email"}
-    model=User
-    code=''
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        print(context_data['view'].request.user.username)
-        context_data['code'] = generate_code()
-        print(context_data['code'])
-        #messages.add_message(request, messages.INFO, 'Регистрация прошла успешно')
+        if user is not None and token_generator.check_token(user, token):
+            user.confirm_email = True
+            user.save()
+            login(request, user)
+            return HttpResponseRedirect(reverse('mainapp:index')) # если ок
+        return HttpResponseRedirect(reverse('authapp:fail')) # если хуй
 
-        return context_data
-    # use = HttpRequest.GET.user
-    # def get(self, request,  *args, **kwargs):
-    #     code = generate_code()
-    #     print(request.user.email)
-    #     print(code)
-    #     return HttpResponse('authapp:confirm')
-    # #code=generate_code()
-
-    #send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, ['reallife1990msk@mail.ru'])
-
-
-    def post(self, request,  *args, **kwargs):
+    @staticmethod
+    def get_user(uidb64):
         try:
-            print(request.user.username)
-            print(request.__dict__)
-            if request.POST.get('conf_code') != '':
-                # new_user= User.objects.create(
-                #     username=request.POST.get('username'),
-                #     first_name=request.POST.get('first_name'),
-                #     email=request.POST.get('email')
-                #     )
-                # new_user.set_password(request.POST.get('password1'))
-                # new_user.save()
-                messages.add_message(request, messages.INFO,'Регистрация прошла успешно')
-                return HttpResponseRedirect(reverse('authapp:login'))
-            else:
-                messages.add_message(request, messages.WARNING, 'что-то не так1')
-                return HttpResponseRedirect(reverse('authapp:register'))
-        except Exception as ex:
-            messages.add_message(request, messages.WARNING,'что-то не так2')
-            return HttpResponseRedirect(reverse('authapp:register'))
+            # urlsafe_base64_decode() decodes to bytestring
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError,
+                User.DoesNotExist, ValidationError):
+            user = None
+        return user
 
+class FailEmailView(TemplateView):
+    template_name = 'authapp/fail_email.html'

@@ -1,0 +1,7 @@
+{% autoescape off %}
+
+Здравствуйте {{ user.first_name|default:user.get_username }},
+Пожалуйста перейдите по ссылке чтобы закончить регистрацию на сайте
+http://{{ domain }}{% url 'authapp:verify_email' uidb64=uid token=token %}
+
+{% endautoescape %}
