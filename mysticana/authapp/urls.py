@@ -11,8 +11,7 @@ urlpatterns = [
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view(), name='register'),
     path('edit/', CustomEditView.as_view(), name='edit'),
-    path('veriyfy/<uidb64>/<token>/', VerifyView.as_view(), name='verify_email'),
-    path('fail/', FailEmailView.as_view(), name='fail_email'),
-    # path('confirm/', ConfirmEmailView.as_view(), name='confirm'),
+    path('verify/<uidb64>/<token>/', VerifyView.as_view(), name='verify_email'),
+
     #path('password/', PasswordChangeView.as_view(), name='password_change'),
 ]

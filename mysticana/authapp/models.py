@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 class User(AbstractUser):
-    id = models.UUIDField(primary_key=True, default=uuid4(), verbose_name="id")
+    id = models.UUIDField(primary_key=True, default=uuid4, verbose_name="id")
     email = models.EmailField(unique=True, verbose_name='Email')
     confirm_email = models.BooleanField(default=False, verbose_name="Подтвержение")
 
