@@ -13,23 +13,20 @@ def send_email_for_verify(request, user):
     context = {
         'user': user,
         'domain': current_site.domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'uid': urlsafe_base64_encode(force_bytes(user.id)),
         'token': token_generator.make_token(user),
     }
-    # if user.first_name:
-    #     context['user'] = user.first_name
-    # else:
-    #     context['user'] = user.username
-    # print(context)
+
     message = render_to_string(
         'authapp/verify_email.html',
         context=context,
     )
     # ???
     email = EmailMessage(
-        'Veryfi email',
+        'Подтверждение регистрации',
         message,
         to=[user.email],
     )
     print(message)
     email.send()
+

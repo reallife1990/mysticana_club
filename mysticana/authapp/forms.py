@@ -2,9 +2,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from crispy_forms.helper import FormHelper
 from django.core.exceptions import ValidationError
-
 from authapp.utils import send_email_for_verify
-
 from django.contrib.auth.forms import AuthenticationForm as DjangoAuthenticationForm
 
 
