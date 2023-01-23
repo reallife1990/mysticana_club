@@ -1,10 +1,22 @@
 from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from crispy_forms.helper import FormHelper
 from django.core.exceptions import ValidationError
 from authapp.utils import send_email_for_verify
 from django.contrib.auth.forms import AuthenticationForm as DjangoAuthenticationForm
 from django.contrib import messages
+
+class ChangePasswordForm(PasswordChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields ='__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal text-color="red"'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8 text-primary'
 
 
 class CustomUserCreationForm(UserCreationForm):

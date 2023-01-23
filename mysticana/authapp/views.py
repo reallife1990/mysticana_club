@@ -1,14 +1,14 @@
 
 
 from django.contrib import messages
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth import authenticate, login, get_user_model, logout
 
 from django.http import HttpResponseRedirect, HttpRequest
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, View
 from django.core.exceptions import ValidationError
-from authapp.forms import CustomUserCreationForm, CustomUserChangeForm, AuthenticationForm
+from authapp.forms import CustomUserCreationForm, CustomUserChangeForm, AuthenticationForm, ChangePasswordForm
 from authapp.models import User
 from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import redirect, render
@@ -26,7 +26,17 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     pass
 
+class ChangePassView(PasswordChangeView):
+    template_name = 'authapp/password_change.html'
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy("authapp:password_change_done")
 
+class ChangeDonePassView(PasswordChangeDoneView):
+    template_name = 'authapp/password_done_change.html'
+
+    def get(self, request, *args, **kwargs): #exit
+        logout(self.request)
+        return super().get(self, request, args, **kwargs)
 
 
 class RegisterView(View):
@@ -66,10 +76,6 @@ class CustomEditView(UpdateView):
 
     def get_object(self, queryset=None):  # ограничение на редактирование только своего профиля
         return self.request.user
-
-
-class EditView(TemplateView):
-    pass
 
 
 class VerifyView(View):
