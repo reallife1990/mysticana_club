@@ -15,7 +15,7 @@ from django.shortcuts import redirect, render
 from authapp.utils import send_email_for_verify
 from django.contrib.auth.tokens import default_token_generator as \
     token_generator
-
+from django.utils import timezone
 
 class CustomLoginView(LoginView):
     form_class = AuthenticationForm
@@ -72,6 +72,7 @@ class CustomEditView(UpdateView):
 
     # success_url  для edit, update, create обязательный
     def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
         return reverse_lazy('authapp:edit', args=[self.request.user.id])
 
     def get_object(self, queryset=None):  # ограничение на редактирование только своего профиля

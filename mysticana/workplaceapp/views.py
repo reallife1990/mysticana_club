@@ -7,14 +7,16 @@ from django.core.mail import send_mail
 
 # Create your views here.
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 # Create your views here.
-from datetime import datetime
+from datetime import datetime, date
 
 #@login_required
 from mysticana import settings
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseRedirect
+
+from workplaceapp.models import MainClients
 
 
 class ControlAccess(AccessMixin):
@@ -35,6 +37,15 @@ class ControlAccess(AccessMixin):
 
 class MainView(ControlAccess, TemplateView):
     template_name = 'workplaceapp/index.html'
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['date_now'] = datetime.now()
+        return context_data
+
+class ShowAllClientsView(ControlAccess,ListView):
+    template_name = 'workplaceapp/clients_list.html'
+    model = MainClients
+
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()

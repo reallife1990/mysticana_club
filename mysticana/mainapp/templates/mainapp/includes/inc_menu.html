@@ -32,12 +32,15 @@
                             {%if user.confirm_email == False%}
                             <a class="dropdown-item" href="#">Подтвердить Email</a>
                             {%else%}
-                            <a class="dropdown-item" href="{% url 'authapp:edit' %}">Редактировать профиль</a>
+                            <a class="dropdown-item" href="{% url 'authapp:edit' pk=request.user.pk %}">Редактировать профиль</a>
+                            {%endif%}
+                            {%if user.is_client == False%}
+                            <a class="dropdown-item" href="#">Стать клиентом</a>
                             {%endif%}
                             <a class="dropdown-item" href="#">Мои курсы</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Модерация</a>
-                            <a class="dropdown-item" href="#">Административный раздел</a>
+                            <a class="dropdown-item" href="{% url 'admin:index'%}">Административный раздел</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'authapp:logout'%}">Выход</a>
                         </div>
