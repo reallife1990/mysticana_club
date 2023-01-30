@@ -25,7 +25,13 @@ class MainClients(models.Model):
     #  с базой не взаимодействует
     @property
     def age(self):
-        return(datetime.now().year - self.born_date.year)
+        years = datetime.now().year - self.born_date.year
+        if datetime.now().month < self.born_date.month or \
+                (datetime.now().month == self.born_date.month and
+                 datetime.now().day < self.born_date.day):
+            years -= 1
+
+        return years
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
