@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 
 # Create your views here.
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 # Create your views here.
 from datetime import datetime, date
 
@@ -50,3 +50,8 @@ class ShowAllClientsView(ControlAccess,ListView):
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()
         return context_data
+
+
+class ShowClientView(ControlAccess, DetailView):
+    template_name = 'workplaceapp/clients_detail.html'
+    model = MainClients
