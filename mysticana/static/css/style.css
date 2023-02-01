@@ -9,3 +9,12 @@
 
 .text-muted{color:#000!important}
 .invalid-feedback{color:#fff700}
+
+.img-article-left {
+	width: auto;
+
+	max-height: 150px;
+	height: auto;
+	float: left;
+	padding: 0 10px 10px 0;
+}
