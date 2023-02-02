@@ -21,45 +21,26 @@
 
 
     <link rel="stylesheet" href="{% static 'css/style.css' %} ">
-    <title>Welcome to Braniac!</title>
+    <title>Title</title>
 </head>
+<body>
 
-<body class="new">
-{% include 'workplaceapp/includes/inc_menu.html' %}
-
-
-
-
-    <div class="container-md">
-    {% block content %}
-        {% endblock %}
-
-    </div>
-
-
-
-
-
-    <!-- Footer -->
-
-    <div class="container-lg mt-auto">
-        <hr>
-
-        <div class="row justify-content-center">
-            <div>
-                <p><small>&copy; Reallife 2023</small></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- /Footer -->
+            <p>
+  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Ссылка с href
+  </a>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Кнопка с data-target
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    Некоторый заполнитель для компонента сворачивания. Эта панель по умолчанию скрыта, но открывается, когда пользователь активирует соответствующий триггер.
+  </div>
+</div>
 
 
-
-
-    <!-- JavaScript section -->
-    <!-- Bootstrap -->
-    <script src="{% static 'js/jquery-3.6.0.min.js'%}"></script>
+ <script src="{% static 'js/jquery-3.6.0.min.js'%}"></script>
     <script src="{% static 'js/popper.min.js'%}"></script>
     <script src="{% static 'js/bootstrap.min.js'%}"></script>
 
@@ -69,11 +50,5 @@
     <!-- FontAwesome -->
     <script src="{% static 'js/fontawesome.all.min.js'%}"></script>
 
-<!-- FontAwesome -->
-    <script src="{% static 'js/info.js'%}"></script>
-
-
-
 </body>
-
 </html>

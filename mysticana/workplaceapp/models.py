@@ -4,6 +4,7 @@ from django.db import models
 from authapp.models import User
 from uuid import uuid4
 from datetime import datetime, timezone
+from.utils import Reduction
 
 
 class MainClients(models.Model):
@@ -35,6 +36,15 @@ class MainClients(models.Model):
             years -= 1
 
         return years
+
+    @property
+    def info(self):
+
+        d={}
+        d['a']=Reduction.std(self.born_date.year)
+        d['b']=Reduction.for_pi(self.born_date.year)
+        d['c'] = Reduction.for_pi_limit(self.born_date.year)
+        return d
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'

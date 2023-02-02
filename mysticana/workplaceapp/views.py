@@ -55,3 +55,9 @@ class ShowAllClientsView(ControlAccess,ListView):
 class ShowClientView(ControlAccess, DetailView):
     template_name = 'workplaceapp/clients_detail.html'
     model = MainClients
+    #print(MainClients.object.born_date)
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['date_now'] = datetime.now()
+        print (context_data['mainclients'].born_date)
+        return context_data
