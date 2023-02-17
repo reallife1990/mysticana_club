@@ -19,7 +19,7 @@
             <div class="w-65 mx-4">
                 <!--            Сводка по клиенту-->
                 <p class="h3 card-title mt-3">{{object.first_name}} {{object.last_name}}</p>
-                <p class="h4 mt-1"> Возраст:{{object.age}} %года</p>
+                <p class="h4 mt-1"> Возраст: {{object.age}} </p>
                 <p class="h4 mt-1"> Дата рождения: {{object.born_date}}</p>
                 {% if object.born_time%}
                 <p class="h4 mt-1"> Время рождения: {{object.born_time}}</p>
@@ -80,6 +80,37 @@
                     </td>
                 </tr>
             </table>
+            <table class="table-main-calc" style="width: 100%">
+                <tr>
+                    <td>
+                        <h5 class="card-title">ЧХ</h5>
+                    </td>
+                      <td>
+                        <h5 class="card-title">Экспрессия</h5>
+                    </td>
+                      <td>
+                        <h5 class="card-title">Подход</h5>
+                    </td>
+                    <td>
+                        <h6 class="card-subtitle mb-2 text-muted">{{object.born_date}}</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5 class="card-title">ЧХ</h5>
+                    </td>
+                      <td>
+                        <h5 class="card-title">Экспрессия</h5>
+                    </td>
+                      <td>
+                        <h5 class="card-title">Подход</h5>
+                    </td>
+                    <td>
+                        <h6 class="card-subtitle mb-2 text-muted">{{object.born_date}}</h6>
+                    </td>
+                </tr>
+            </table>
+
             <h6 class="card-subtitle mb-2 text-muted">{{object.date_created}}</h6>
             <p class="card-text">{{object.info}}</p>
             <p class="card-text">{{object.age}}</p>

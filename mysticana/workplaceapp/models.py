@@ -34,15 +34,21 @@ class MainClients(models.Model):
                 (datetime.now().month == self.born_date.month and
                  datetime.now().day < self.born_date.day):
             years -= 1
-
-        return years
+        txt = ''
+        if (years % 10 == 1 and years != 11):
+            txt = 'год'
+        elif(years % 10 in [2,3,4]):
+            txt = 'года'
+        else:
+            txt = 'лет'
+        return f'{years} {txt}'
 
     @property
     def info(self):
 
-        d={}
-        d['a']=Reduction.std(self.born_date.year)
-        d['b']=Reduction.for_pi(self.born_date.year)
+        d = {}
+        d['a'] = Reduction.std(self.born_date.year)
+        d['b'] = Reduction.for_pi(self.born_date.year)
         d['c'] = Reduction.for_pi_limit(self.born_date.year)
         return d
     class Meta:
