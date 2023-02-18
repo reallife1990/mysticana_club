@@ -151,4 +151,49 @@
       }, false)
     })
   }
+
+  window.addEventListener("resize", AutoScaleTable); //Масштабируем страницу при растягивании окна
+
+AutoScaleTable(); //Масштабируем таблицу после загрузки
+
+function AutoScaleTable()
+{
+    let width = window.innerWidth; //Ширина окна
+    //Если вы хотите проверять по размеру экрана, то вам нужно свойство window.screen.width
+    let val_elems = document.getElementsByClassName('table-elems').length
+    if(width > 1280)
+    {
+   	 console.log({width});
+    }
+    else if(width <= 1280 && width > 720)
+    {
+        for(let i=0; i<val_elems; i++){
+            document.getElementsByClassName('table-elems')[i].classList.add('t-show');
+        }
+        for(let i=0; i<document.getElementsByClassName('table-rows').length; i++){
+            document.getElementsByClassName('table-rows')[i].classList.remove('t-show');
+        }
+
+        // document.getElementsByClassName('table-rows')[0].style= "display: none";
+   	 //  console.log({width});
+    }
+    else if(width < 720)
+    {
+         for( let i=0; i<val_elems; i++){
+             console.log(i);
+            document.getElementsByClassName('table-elems')[i].classList.remove('t-show');
+        }
+         for(let i=0; i<document.getElementsByClassName('table-rows').length; i++){
+            document.getElementsByClassName('table-rows')[i].classList.add('t-show');
+        }
+
+        // document.getElementsByClassName('table-rows')[0].style= "display: revert ;";
+   	 // console.log({width});
+    }
+}
+//   if (document.table-main-calc.clientWidth < 1200) {
+//  console.log("ugyuui")
+// } else {
+// console.log("123456")
+// };
 })()

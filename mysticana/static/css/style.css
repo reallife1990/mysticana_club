@@ -20,7 +20,41 @@
 }
 .table-main-calc td {
 
-    border-style: solid;
-    border-width: 1px;
-    border-color: gray;
+    border-style: double;
+
 }
+.headers-table{
+    color: blue;
+    background-color: yellow;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold ;
+    text-align: center;
+}
+
+.head-table{
+    color: red;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: bold ;
+    text-align: center;}
+.values-table{
+    color: red;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: bold ;
+    text-align: center;
+}
+
+.table-elems{
+    display: none ;
+}
+
+.table-elems.t-show{
+    display: revert;
+}
+.table-rows{
+    display:none ;
+}
+.table-rows.t-show{
+    display: revert;}

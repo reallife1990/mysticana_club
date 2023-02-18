@@ -6,8 +6,7 @@
 
     <div class="col-lg-12 ">
         <div class="card my-2">
-            <div class=d-sm-flex mb-3
-            ">
+            <div class="d-sm-flex mb-3">
             <!--        sm- small -переход-->
             <div class="w-35">
                 {% if object.photo %}
@@ -20,7 +19,7 @@
                 <!--            Сводка по клиенту-->
                 <p class="h3 card-title mt-3">{{object.first_name}} {{object.last_name}}</p>
                 <p class="h4 mt-1"> Возраст: {{object.age}} </p>
-                <p class="h4 mt-1"> Дата рождения: {{object.born_date}}</p>
+                <p class="h4 mt-1"> Дата рождения: {{object.born_date|date:"d.m.Y"}}</p>
                 {% if object.born_time%}
                 <p class="h4 mt-1"> Время рождения: {{object.born_time}}</p>
                 {%endif%}
@@ -70,43 +69,75 @@
             </div>
         </div>
         <div class="card-body">
-            <table style=" width:100%">
-                <tr>
+
+            <table class="table-main-calc" style="width: 100%">
+                <th colspan="5" class="head-table"> Основной видический расчёт</th>
+                <tr class="headers-table">
                     <td>
-                        <h5 class="card-title">{{object.first_name}} {{object.last_name}}</h5>
+                       ЧХ
                     </td>
+                      <td>
+                        Экспрессия
+                    </td>
+                      <td>
+                       Подход
+                    </td>
+                    <td class="table-elems headers-table">
+                        Метод
+                    </td>
+                     <td class="table-elems headers-table">
+                        Карма
+                    </td>
+                </tr>
+                <tr class="values-table">
                     <td>
-                        <h6 class="card-subtitle mb-2 text-muted">{{object.born_date}}</h6>
+                       {{object.info.main_tbl.num_char}}
+                    </td>
+                      <td>
+                        {{object.info.main_tbl.expr}}
+                    </td>
+                      <td>
+                        {{object.info.main_tbl.way}}
+                    </td>
+                    <td class="table-elems">
+                      {{object.info.main_tbl.method}}
+                    </td>
+                     <td class="table-elems">
+                        {{object.info.main_tbl.karm}}
                     </td>
                 </tr>
             </table>
             <table class="table-main-calc" style="width: 100%">
-                <tr>
+                <tr class ="table-rows headers-table">
                     <td>
-                        <h5 class="card-title">ЧХ</h5>
+                        Метод
                     </td>
                       <td>
-                        <h5 class="card-title">Экспрессия</h5>
-                    </td>
-                      <td>
-                        <h5 class="card-title">Подход</h5>
-                    </td>
-                    <td>
-                        <h6 class="card-subtitle mb-2 text-muted">{{object.born_date}}</h6>
+                        Карма
                     </td>
                 </tr>
-                <tr>
+                 <tr class ="table-rows values-table">
                     <td>
-                        <h5 class="card-title">ЧХ</h5>
+                        {{object.info.main_tbl.method}}
                     </td>
                       <td>
-                        <h5 class="card-title">Экспрессия</h5>
+                        {{object.info.main_tbl.karm}}
+                    </td>
+                </tr>
+                 <tr class="headers-table">
+                    <td>
+                        Проблема воплощения
                     </td>
                       <td>
-                        <h5 class="card-title">Подход</h5>
+                        Солярный год
                     </td>
+                </tr>
+                 <tr  class="values-table">
                     <td>
-                        <h6 class="card-subtitle mb-2 text-muted">{{object.born_date}}</h6>
+                        {{object.info.main_tbl.trable}}
+                    </td>
+                      <td>
+                        {{object.info.main_tbl.sol_year}}
                     </td>
                 </tr>
             </table>

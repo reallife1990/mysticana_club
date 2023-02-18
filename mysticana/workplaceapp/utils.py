@@ -1,3 +1,4 @@
+from datetime import datetime
 
 class Reduction:
     # def __init__(self):
@@ -28,3 +29,32 @@ class Reduction:
             return Reduction.reduction(self)
         else:
             return Reduction.std(self)
+
+
+class Calculate:
+    # def __init__(self, date_user):
+    #      date_us = self.date_user
+
+    def main_table(self, age):
+        result = {}
+        result['num_char'] = Reduction.std(self.day)  # чх
+        result['way'] = Reduction.std(self.month)  # подход
+        result['method'] = Reduction.std(self.year)  # метод
+        result['expr'] = Reduction.std(result.get('num_char')+result.get('way'))  # экспрессия
+        result['karm'] = Reduction.std(result.get('method')+result.get('expr'))  # карма
+        result['trable'] = Reduction.std(abs(
+            (result.get('num_char') - result.get('way')) -
+            (result.get('num_char') - result.get('method'))
+             ))  # проблема воплощения
+
+        if datetime.now().year - self.year == age:
+
+            result['sol_year'] = Reduction.std(result.get("expr") +
+                                               Reduction.std(datetime.now().year))
+        else:
+            result['sol_year'] = Reduction.std(result.get("expr") +
+                                               Reduction.std((datetime.now().year)-1))
+            # солярный год
+        return result
+
+
