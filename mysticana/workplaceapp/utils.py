@@ -1,4 +1,10 @@
+import base64
 from datetime import datetime
+from io import BytesIO
+import matplotlib.pyplot as plt
+
+import numpy as np
+
 
 class Reduction:
     # def __init__(self):
@@ -36,6 +42,17 @@ class Calculate:
     #      date_us = self.date_user
 
     def main_table(self, age):
+        """
+
+        :param age: возраст
+        :return: dict: 'num_char'- число характера
+                'way'- подход
+                'method' - метод
+                'expr' - экспрессия
+                'karm'- карма
+                'trable' - проблема воплощения
+                'sol_year' -  солярный год
+        """
         result = {}
         result['num_char'] = Reduction.std(self.day)  # чх
         result['way'] = Reduction.std(self.month)  # подход
@@ -48,13 +65,81 @@ class Calculate:
              ))  # проблема воплощения
 
         if datetime.now().year - self.year == age:
-
+            # солярный год
             result['sol_year'] = Reduction.std(result.get("expr") +
                                                Reduction.std(datetime.now().year))
         else:
             result['sol_year'] = Reduction.std(result.get("expr") +
                                                Reduction.std((datetime.now().year)-1))
-            # солярный год
+
         return result
 
+class DrawGraph:
+
+    def calculate_data(self):
+        """
+        self: born_date(object datetime)
+        словарь для отрисовки графика
+        :return: dict: sy(list) - судьба !!!значения int!!!
+                       vol(list) - воля
+        """
+        year = self.year
+        other = self.day*100+self.month
+        sy = list(str(year*other))
+        vol = list(str(int(str(year).replace('0','1'))*int(str(other).replace('0','1'))))
+        if len(sy) < 7:
+            sy.insert(0,'0')
+        if len(vol) < 7:
+            vol.insert(0,'0')
+        result = {'sy': [], 'vol': [],}
+        for i in sy:
+            result['sy'].append(int(i))
+        for i in vol:
+            result['vol'].append(int(i))
+        print(result)
+        return result
+
+    @staticmethod
+    def get_graph():
+        buffer = BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        graph = base64.b64encode(image_png)
+        graph = graph.decode('utf-8')
+        buffer.close()
+        return graph
+    @staticmethod
+    def get_plot(data, age):
+        d= DrawGraph.calculate_data(data)
+
+        vol = d.get('vol')
+        sy = d.get('sy')
+        now = int(age.split(' ')[0])
+        print(vol, sy, now)
+        x = [0, 12, 24, 36, 48, 60, 72]
+        plt.switch_backend('AGG') # запись в файл
+        fig, ax = plt.subplots()
+        plt.title('График судьбы и воли', fontsize=14)
+        plt.grid()
+        line = ax.plot(x, vol, c='r')
+        line2 = ax.plot(x, sy, c='g')
+        line3 = ax.vlines(now, 0, 9)  # сейчас
+        plt.setp(line, linestyle='--', c='g', label='график воли')
+        plt.setp(line2, linestyle='-', c='r', label='график судьбы')
+        plt.setp(line3, color='b')
+        plt.xlabel('возраст', fontsize=14)
+        plt.ylabel('сила действия', fontsize=14)
+        plt.xticks(range(0, 73, 12), fontsize=14)
+        plt.yticks(range(0, 10, 1), fontsize=14)
+
+        plt.tight_layout()
+        fig.set_figwidth(11)
+        fig.set_figheight(7)
+
+        plt.legend(fontsize=12, shadow=True, framealpha=1, facecolor='yellow',
+                   edgecolor='r', title='Легенда', loc='best')
+
+        graph = DrawGraph.get_graph()
+        return graph
 

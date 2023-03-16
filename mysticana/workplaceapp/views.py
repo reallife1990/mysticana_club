@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 # Create your views here.
 from datetime import datetime, date
-
+from .utils import DrawGraph
 #@login_required
 from mysticana import settings
 from django.contrib.auth.mixins import AccessMixin
@@ -55,9 +55,12 @@ class ShowAllClientsView(ControlAccess,ListView):
 class ShowClientView(ControlAccess, DetailView):
     template_name = 'workplaceapp/clients_detail.html'
     model = MainClients
+
     #print(MainClients.object.born_date)
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()
         print (context_data['mainclients'].born_date)
+        context_data['img'] = DrawGraph.get_plot(context_data['mainclients'].born_date,
+                                                 context_data['mainclients'].age)
         return context_data

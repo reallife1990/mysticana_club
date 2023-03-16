@@ -29,6 +29,10 @@ class MainClients(models.Model):
     #  с базой не взаимодействует
     @property
     def age(self):
+        """
+
+        :return: возраст клиента
+        """
         years = datetime.now().year - self.born_date.year
         if datetime.now().month < self.born_date.month or \
                 (datetime.now().month == self.born_date.month and
@@ -45,6 +49,10 @@ class MainClients(models.Model):
 
     @property
     def info(self):
+        """
+        :return: массив с данными для отображения:
+                main_tbl -основной видический расчёт
+        """
 
         d = {}
         d['a'] = Reduction.std(self.born_date.year)

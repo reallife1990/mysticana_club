@@ -1,5 +1,3 @@
-
-
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth import authenticate, login, get_user_model, logout
@@ -17,19 +15,23 @@ from django.contrib.auth.tokens import default_token_generator as \
     token_generator
 from django.utils import timezone
 
+
 class CustomLoginView(LoginView):
     form_class = AuthenticationForm
     template_name = "authapp/login.html"
     extra_context = {'title': "Вход"}
     #messages.add_message(request, messages.INFO, 'Hello ')
 
+
 class CustomLogoutView(LogoutView):
     pass
+
 
 class ChangePassView(PasswordChangeView):
     template_name = 'authapp/password_change.html'
     form_class = ChangePasswordForm
     success_url = reverse_lazy("authapp:password_change_done")
+
 
 class ChangeDonePassView(PasswordChangeDoneView):
     template_name = 'authapp/password_done_change.html'
@@ -57,13 +59,14 @@ class RegisterView(View):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             send_email_for_verify(request, user)
-            text=f'На {user.email} отправлено письмо для завершения регистрации'
+            text = f'На {user.email} отправлено письмо для завершения регистрации'
             messages.add_message(self.request, messages.INFO, text)
             return redirect(reverse_lazy('mainapp:index'))
         context = {
             'form': form
         }
         return render(request, self.template_name, context)
+
 
 class CustomEditView(UpdateView):
     model = User
