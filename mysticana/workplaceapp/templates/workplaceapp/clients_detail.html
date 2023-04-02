@@ -148,11 +148,11 @@
             <a href="{% url 'mainapp:index' %}" class="card-link">Подробнее</a>
 
         </div>
-            <div>
-                {% if img %}
-                <img src="data:image/png;base64, {{img|safe}}" class="container">
-                {% endif %}
-            </div>
+        <div>
+            {% if img %}
+            <img src="data:image/png;base64, {{img|safe}}" class="container">
+            {% endif %}
+        </div>
 
     </div>
 

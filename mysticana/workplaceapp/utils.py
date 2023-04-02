@@ -3,12 +3,10 @@ from datetime import datetime
 from io import BytesIO
 import matplotlib.pyplot as plt
 
-import numpy as np
-
-
 class Reduction:
-    # def __init__(self):
-    #     value = self.value
+    """
+    incoming INT
+    """
 
     def reduction(self):
         # суммирование цифр
@@ -43,7 +41,7 @@ class Calculate:
 
     def main_table(self, age):
         """
-
+        ф-ция для данных видического расчёта
         :param age: возраст
         :return: dict: 'num_char'- число характера
                 'way'- подход
@@ -143,3 +141,55 @@ class DrawGraph:
         graph = DrawGraph.get_graph()
         return graph
 
+
+class TablePifagora():
+    """
+
+       self: born_date(objectdatetime)
+    """
+    # def calculate(self, method='std'):
+    #     # std стандартное сокращение до однозначного числа
+    #     # for_pi для таблицы пифагора , не сокращается
+    #     # for_pi_limit для таблицы пифагора , не сокращается 10 11 и 12
+    #     day = str(self.day)
+    #     month = str(self.month)
+    #     year = str(self.year)
+    #     str_date=str(self.day)+str(self.month)+str(self.year)
+    #
+    #
+    #     res = 0
+    #     for el in str_date:
+    #         res += int(el)
+    #     if method == 'for_pi':
+    #         return res
+    #     elif method == 'for_pi_limit' and res in [10, 11, 12]:
+    #         return res
+    #     else:
+    #         while res > 9:
+    #             res = res // 10 + res % 10
+    #         return res
+    def data_table(self):
+        """
+
+        :return:
+        """
+        pass
+
+    def work_numbers(self):
+        """
+        рабочие числа:
+        1е - сумма всех в дате
+        2е - сокращение 1го до однозначного при >12
+        3е - модуль(1е - 2* на первое число дня рождения)
+        4е -  сокращение 3го до однозначного при >12
+        ЧЖП = сокращение 1го при >9
+        :return:
+
+        """
+        str_date = str(self.day) + str(self.month) + str(self.year)
+        first = Reduction.for_pi(str_date)
+        second =Reduction.for_pi_limit(first)
+
+        three =abs(first - 2*int(str(self.day)[0]))
+        four = Reduction.for_pi_limit(three)
+        return first,second,three,four

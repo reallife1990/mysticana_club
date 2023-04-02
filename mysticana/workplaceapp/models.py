@@ -4,7 +4,7 @@ from django.db import models
 from authapp.models import User
 from uuid import uuid4
 from datetime import datetime, timezone
-from.utils import Reduction, Calculate
+from .utils import Reduction, Calculate, TablePifagora
 
 
 class MainClients(models.Model):
@@ -60,6 +60,7 @@ class MainClients(models.Model):
         d['c'] = Reduction.for_pi_limit(self.born_date.year)
         d['d'] = {"re":20}
         d['main_tbl'] = Calculate.main_table(self.born_date, self.age)
+        d['e'] = TablePifagora.work_numbers(self.born_date)
         return d
     class Meta:
         verbose_name = 'Клиент'

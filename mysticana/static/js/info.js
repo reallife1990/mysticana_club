@@ -154,19 +154,17 @@
 
   window.addEventListener("resize", AutoScaleTable); //Масштабируем страницу при растягивании окна
 
-AutoScaleTable(); //Масштабируем таблицу после загрузки
+window.addEventListener("load",AutoScaleTable); //Масштабируем таблицу после загрузки
 
 function AutoScaleTable()
 {
     let width = window.innerWidth; //Ширина окна
     //Если вы хотите проверять по размеру экрана, то вам нужно свойство window.screen.width
     let val_elems = document.getElementsByClassName('table-elems').length
-    if(width > 1280)
+
+    if(width > 720)
     {
-   	 console.log({width});
-    }
-    else if(width <= 1280 && width > 720)
-    {
+        //console.log({width});
         for(let i=0; i<val_elems; i++){
             document.getElementsByClassName('table-elems')[i].classList.add('t-show');
         }
