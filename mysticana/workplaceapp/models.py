@@ -60,7 +60,8 @@ class MainClients(models.Model):
         d['c'] = Reduction.for_pi_limit(self.born_date.year)
         d['d'] = {"re":20}
         d['main_tbl'] = Calculate.main_table(self.born_date, self.age)
-        d['e'] = TablePifagora.work_numbers(self.born_date)
+        d['work_numbers'] = TablePifagora.work_numbers(self.born_date)
+        d['work_numbersss'] = TablePifagora.data_table(self.born_date)
         return d
     class Meta:
         verbose_name = 'Клиент'

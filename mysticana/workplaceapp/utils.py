@@ -171,9 +171,49 @@ class TablePifagora():
     def data_table(self):
         """
 
-        :return:
+        :return: словарь квадрата
         """
-        pass
+        CALC_RULES={1:[10,13,17], 2:[11,13], 3:[12,13,16],
+                    4:[10,14], 5:[11,14,16,17], 6:[12,14],
+                    7:[10,15,16], 8:[11,15], 9:[12,15,17]}
+        numbers=TablePifagora.work_numbers(self)[0:4]
+        string=TablePifagora.date_to_str(self)
+        for i in numbers:
+            string+=str(i)
+        table_nums = []
+        for i in range(1, 10):
+            if string.count(str(i)) == 0:
+                table_nums.append('-')
+            else:
+                table_nums.append(str(i) * (string.count(str(i))))
+        # print(table_nums)  #['1', '222', '-', '-', '-', '-', '-', '888', '9']
+        table_dict = dict.fromkeys(range(1,18),0)
+
+        for k,v  in enumerate(range(1, 10),1):
+            volume =string.count(str(v))
+            for i in CALC_RULES.get(k):
+                table_dict[i]=table_dict.get(i)+volume
+            if volume == 0:
+                table_dict[k]= '-'
+            else:
+                table_dict[k]=str(v) * volume
+        conv=f'{table_dict.pop(16)}/{table_dict.pop(17)}'
+        table_dict[16]=conv
+        print(table_dict) #{1: 1, 2: 3, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 3, 9: 1}
+        # TablePifagora.special_values(table_dict)
+
+
+
+
+    def data_answer(self):
+        NAMES = ['', 'Характер', 'Энергия', 'Интерес',
+                 'Здоровье', 'Логика', 'Труд',
+                 'Удача', 'Долг', 'Память',
+                 'Цель', 'Семья', 'Привычки',
+                 'Самооценка', 'Работа', 'Талант',
+                 'Темперамент/Дух']
+        RULES =[[1, 4, 7, 10],[2, 5, 8, 11], [3, 6, 9, 12], [13, 14, 15, 16]]
+
 
     def work_numbers(self):
         """
@@ -186,10 +226,15 @@ class TablePifagora():
         :return:
 
         """
-        str_date = str(self.day) + str(self.month) + str(self.year)
+        str_date = TablePifagora.date_to_str(self)
         first = Reduction.for_pi(str_date)
         second =Reduction.for_pi_limit(first)
 
         three =abs(first - 2*int(str(self.day)[0]))
         four = Reduction.for_pi_limit(three)
-        return first,second,three,four
+        num_life_way =Reduction.std(second)
+        return [first,second,three,four, num_life_way]
+
+    def date_to_str(self):
+        str_date = str(self.day) + str(self.month) + str(self.year)
+        return str_date
