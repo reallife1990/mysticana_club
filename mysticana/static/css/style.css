@@ -61,3 +61,44 @@
 }
 .table-rows.t-show{
     display: revert;}
+
+.pifagor-sq{
+    width: 25%;
+    text-align: center;
+}
+.yellow{
+    background-color: orange;
+}
+
+
+.pifagor-name{
+color:blue;
+font-style:italic;
+font-size:calc(11px + 8 * (100vw - 320px) / 880);
+font-weight: bold;
+width:20%
+
+}
+
+
+.pifagor-val{
+color:red;
+font-style:italic;
+font-size:20px;
+font-weight: bold;
+width:20%
+}
+
+.tbl_value{
+color:red;
+font-style:italic;
+font-weight: bold;
+font-size:calc(16px + 8 * (100vw - 320px) / 880);
+}
+
+.work_nums{
+color:#008B8B;
+font-style:italic;
+font-weight: bold;
+font-size:24px;
+}

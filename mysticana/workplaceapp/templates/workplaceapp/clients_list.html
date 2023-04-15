@@ -1,26 +1,37 @@
 {% extends 'workplaceapp/base.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="row">
 
   <div class="col-lg-8">
     {%for client in object_list%}
-    <div class="card my-2">
-      <div class="card-body">
-        <table style=" width:100%">
-          <tr><td>
-        <h5 class="card-title">{{client.first_name}} {{client.last_name}}</h5>
-          </td><td>
-            <h6 class="card-subtitle mb-2 text-muted">{{client.born_date}}</h6>
-          </td>
-          </tr>
-          </table>
-        <h6 class="card-subtitle mb-2 text-muted">{{client.date_created}}</h6>
-        <p class="card-text">{{client.city}}</p>
-        <p class="card-text">{{client.age}}</p>
-        <a href="{% url 'workplaceapp:client_detail' pk=client.pk %}" class="card-link">Подробнее</a>
 
+    <div class="card mb-3" >
+      <div class="row no-gutters">
+        <div class="col-md-3">
+           {% if client.photo %}
+                <img class="ml-2 mt-2" width="130px" src="{{client.photo.url}}">
+                {% else %}
+                <img class="ml-2 mt-2" width="130px" src="{% static 'img/no_photo.png' %}">
+                {% endif%}
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{client.first_name}} {{client.last_name}}</h5>
+            <h6 class="card-subtitle">Возраст: {{client.age}}
+              <br>
+              Дата рождения:{{client.born_date|date:"d.m.Y"}}
+            </h6>
+            <p class="card-text mt-2">
+              Город: {{client.city}}<br>
+              Регистрация: {{client.date_created}}<br>
+              Проведено консультаций:
+            </p>
+            <a href="{% url 'workplaceapp:client_detail' pk=client.pk %}" class="card-link">Подробнее</a>
+
+          </div>
+        </div>
       </div>
     </div>
     {%endfor%}

@@ -61,7 +61,7 @@ class MainClients(models.Model):
         d['d'] = {"re":20}
         d['main_tbl'] = Calculate.main_table(self.born_date, self.age)
         d['work_numbers'] = TablePifagora.work_numbers(self.born_date)
-        d['work_numbersss'] = TablePifagora.data_table(self.born_date)
+        d['pifagor'] = TablePifagora.data_answer(self.born_date)
         return d
     class Meta:
         verbose_name = 'Клиент'

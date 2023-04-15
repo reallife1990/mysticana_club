@@ -201,6 +201,7 @@ class TablePifagora():
         table_dict[16]=conv
         print(table_dict) #{1: 1, 2: 3, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 3, 9: 1}
         # TablePifagora.special_values(table_dict)
+        return table_dict
 
 
 
@@ -213,7 +214,17 @@ class TablePifagora():
                  'Самооценка', 'Работа', 'Талант',
                  'Темперамент/Дух']
         RULES =[[1, 4, 7, 10],[2, 5, 8, 11], [3, 6, 9, 12], [13, 14, 15, 16]]
-
+        DATA = TablePifagora.data_table(self)
+        WORK_NUMB = TablePifagora.work_numbers(self)
+        data_table=[]
+        for rule in RULES:
+            row=[]
+            for elem in rule:
+                row.append({'elem':elem, 'name': NAMES[elem],'data':DATA[elem]})
+            data_table.append(row)
+        print(data_table)
+        answ = {"work_numb": WORK_NUMB[:4], "data": data_table, '4gp':WORK_NUMB[4]}
+        return answ
 
     def work_numbers(self):
         """
