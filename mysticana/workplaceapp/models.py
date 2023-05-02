@@ -1,10 +1,11 @@
 import uuid
-
+from django.contrib import admin
 from django.db import models
 from authapp.models import User
 from uuid import uuid4
 from datetime import datetime, timezone
 from .utils import Reduction, Calculate, TablePifagora
+
 
 
 class MainClients(models.Model):
@@ -23,11 +24,12 @@ class MainClients(models.Model):
     instagram = models.CharField(max_length=50, blank=True, verbose_name="Instagram")
     vk = models.CharField(max_length=50, blank=True, verbose_name="ВК")
     comment = models.TextField(blank=True, verbose_name="Комментарий")
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, verbose_name="Пользователь")
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Пользователь")
 
     # произвольное вычисляемое поле толькодля отбражения и внутренних дел
     #  с базой не взаимодействует
     @property
+    @admin.display(description='Возраст')
     def age(self):
         """
 
@@ -63,6 +65,30 @@ class MainClients(models.Model):
         d['work_numbers'] = TablePifagora.work_numbers(self.born_date)
         d['pifagor'] = TablePifagora.data_answer(self.born_date)
         return d
+
+    # поле для админки
+    @admin.display(description='Клиент')
+    def admin_name(self):
+        return f'{self.first_name} {self.last_name}'
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
+
+
+class Services(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4)
+    title = models.CharField( max_length=100, blank=False, null=False, verbose_name='Название')
+    description = models.TextField(blank=False, null=False, verbose_name='Описание' )
+    text = models.TextField(verbose_name='Полное описание')
+    created_at = models.DateField(auto_now_add=datetime.now(), verbose_name="Дата добавления")
+    updated_at = models.DateField(auto_now=datetime.now(), verbose_name='Дата изменения')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    price = models.CharField(max_length=30, blank= False, null=False, verbose_name='Стоимость')
+
+    @admin.display(description='Услуга')
+    def admin_name(self):
+        return f'{self.title}'
+    class Meta:
+        verbose_name= 'Услуга'
+        verbose_name_plural = 'Услуги'
+

@@ -1,13 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.mail import send_mail
 
 
 # Create your views here.
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 # Create your views here.
 from datetime import datetime, date
 from .utils import DrawGraph
@@ -15,7 +17,7 @@ from .utils import DrawGraph
 from mysticana import settings
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseRedirect
-
+from workplaceapp.forms import AddClientForm
 from workplaceapp.models import MainClients
 
 
@@ -64,3 +66,20 @@ class ShowClientView(ControlAccess, DetailView):
         context_data['img'] = DrawGraph.get_plot(context_data['mainclients'].born_date,
                                                  context_data['mainclients'].age)
         return context_data
+
+class AddClientView(ControlAccess,CreateView):
+    model = MainClients
+    template_name =  'workplaceapp/client_add.html'
+    form_class = AddClientForm
+    # success_url = reverse_lazy('workplaceapp:client_detail/', pk=)
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
+        print(self.request.POST['id']) # пролучили ид
+        way = self.request.POST['id']
+        return reverse_lazy('workplaceapp:client_detail', kwargs={'pk': way})
+        # return reverse('workplaceapp:client_detail', pk=way)
+
+    # { % url
+    # 'workplaceapp:client_detail'
+    # pk = client.pk %}
