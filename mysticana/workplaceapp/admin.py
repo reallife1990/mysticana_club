@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from workplaceapp.models import MainClients, Services
+from workplaceapp.models import MainClients
 
 
 
@@ -23,8 +23,6 @@ class AdminClients(admin.ModelAdmin):
     list_display =['admin_name','age', 'born_date','user']
     pass
 
-class AdminServices(admin.ModelAdmin):
-    list_display = ['title', 'updated_at', 'price']
+
 
 admin.site.register(MainClients, AdminClients) #( сначала МОДЕЛЬ потом КЛАСС АДМ)
-admin.site.register(Services, AdminServices) #( сначала МОДЕЛЬ потом КЛАСС АДМ)

@@ -23,7 +23,8 @@ class BasicData(models.Model):
 
 
 class News(BasicData):
-    title = models.CharField(max_length=256, verbose_name='Заголовок')
+
+    title = models.CharField(max_length=100, verbose_name='Заголовок')
     preamble = models.CharField(max_length=256, verbose_name='Вступление')
 
     body = models.TextField(verbose_name='Содержание')

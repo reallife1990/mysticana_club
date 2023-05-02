@@ -75,20 +75,20 @@ class MainClients(models.Model):
         verbose_name_plural = 'Клиенты'
 
 
-class Services(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4)
-    title = models.CharField( max_length=100, blank=False, null=False, verbose_name='Название')
-    description = models.TextField(blank=False, null=False, verbose_name='Описание' )
-    text = models.TextField(verbose_name='Полное описание')
-    created_at = models.DateField(auto_now_add=datetime.now(), verbose_name="Дата добавления")
-    updated_at = models.DateField(auto_now=datetime.now(), verbose_name='Дата изменения')
-    is_active = models.BooleanField(default=True, verbose_name='Активна')
-    price = models.CharField(max_length=30, blank= False, null=False, verbose_name='Стоимость')
-
-    @admin.display(description='Услуга')
-    def admin_name(self):
-        return f'{self.title}'
-    class Meta:
-        verbose_name= 'Услуга'
-        verbose_name_plural = 'Услуги'
+# class Services(models.Model):
+#     id = models.UUIDField(primary_key=True, default=uuid4)
+#     title = models.CharField( max_length=100, blank=False, null=False, verbose_name='Название')
+#     description = models.TextField(blank=False, null=False, verbose_name='Описание' )
+#     text = models.TextField(verbose_name='Полное описание')
+#     created_at = models.DateField(auto_now_add=datetime.now(), verbose_name="Дата добавления")
+#     updated_at = models.DateField(auto_now=datetime.now(), verbose_name='Дата изменения')
+#     is_active = models.BooleanField(default=True, verbose_name='Активна')
+#     price = models.CharField(max_length=30, blank= False, null=False, verbose_name='Стоимость')
+#
+#     @admin.display(description='Услуга')
+#     def admin_name(self):
+#         return f'{self.title}'
+#     class Meta:
+#         verbose_name= 'Услуга'
+#         verbose_name_plural = 'Услуги'
 
