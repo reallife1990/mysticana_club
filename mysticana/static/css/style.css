@@ -80,6 +80,40 @@ width:20%
 
 }
 
+.img-wrap {
+  position: relative;
+  overflow:hidden;
+  width: 250px;
+  height: 130px;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #7d7d7d;
+}
+
+.img_wrap img {
+
+  position: absolute;
+   top:50%;
+   left:50%;
+   transform:translate(-50%,-50%);
+   width:300px;
+   height:130px;
+   object-fit:cover;
+
+
+}
+
+.img-wrap h3 {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+
+  color: #ff851b;
+  background-color: #8fd7f2;
+  font-style: italic;
+}
+
 
 .pifagor-val{
 color:red;

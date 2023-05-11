@@ -4,15 +4,50 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 # Create your views here.
-from mainapp.models import News
+from mainapp.models import News, Services
+from next_prev import next_in_order, prev_in_order
 
 
 class IndexView(TemplateView):
     template_name = "mainapp/index.html"
 
 
-class ServicesView(TemplateView):
+
+class ServicesView(ListView):
+    #  отображение услуг
     template_name = "mainapp/services_list.html"
+    model = Services
+    paginate_by = 2
+
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+
+class ServiceDetailView(TemplateView):
+    template_name = 'mainapp/service_detail.html'
+
+
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        # first = Services.objects.filter(pk=self.kwargs.get('pk'))
+        # second = next_in_order(first)
+
+        # prev_in_order(second) == first  # True
+        # last = prev_in_order(first, loop=True)
+        query = Services.objects.filter(deleted=False)
+        # next = query.last().values('pk','title')
+        next = query.filter(pk__gt=self.kwargs.get('pk')).values('pk', 'title').first()
+        prev = query.filter(pk__lt=self.kwargs.get('pk')).reverse().values('pk','title').first()
+        context_data['object'] = get_object_or_404(Services, pk=self.kwargs.get('pk'))
+        if prev is None :
+            prev = query.values('pk', 'title').last()
+        if next is None:
+            next = query.values('pk', 'title').first()
+        context_data['next'] = next
+        context_data['prev'] = prev
+        context_data['prev1'] = prev.get('pk')
+        return context_data
 
 
 class NewsView(ListView):

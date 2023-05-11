@@ -1,98 +1,39 @@
 {% extends 'mainapp/base.html' %}
-
+{% load static %}
 {% block content %}
 
         
     <div class="row justify-content-center mt-3">
+        {%for service in object_list%}
         
 
                 <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="#">
-                    <img src="img/course001.jpg" class="card-img-top" alt="...">
+                <a href="{% url 'mainapp:service_detail' service.pk %}">
+
                     <div class="card-body">
-                        <h5 class="card-title text-center">Web Python</h5>
+                      <div class="img-wrap">
+                        <img src={{service.image.url}} class="img-responsive card-img">
+                        <h3>{{service.title}}</h3>
+
+                     </div>
+                            <div class="card-text">
+                             {{service.preamble}}
+                          </div>
                     </div>
+
+
+
+
                 </a>
                 </div>
+        {%endfor%}
 
+ </div>
+{%if page_obj.paginator.num_pages != 1 %}
+  {%include 'mainapp/includes/inc_paginator.html'%}
+{%endif%}
         
 
-                <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="#">
-                    <img src="img/course002.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Web Golang</h5>
-                    </div>
-                </a>
-                </div>
 
-        
-
-                <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="#">
-                    <img src="img/course003.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Web JavaScript</h5>
-                    </div>
-                </a>
-                </div>
-
-        
-
-                <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="#">
-                    <img src="img/course004.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Web Java</h5>
-                    </div>
-                </a>
-                </div>
-
-        
-
-                <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="#">
-                    <img src="img/course005.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Web PHP</h5>
-                    </div>
-                </a>
-                </div>
-
-        
-
-                <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="#">
-                    <img src="img/course006.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Python AI</h5>
-                    </div>
-                </a>
-                </div>
-
-        
-
-                <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-                <a href="#">
-                    <img src="img/course007.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">DevOps</h5>
-                    </div>
-                </a>
-                </div>
-
-        
-    </div>
-    <div class="row justify-content-center align-items-center mt-3 mb-n3">
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-  </nav>
-</div>
 
 {%endblock%}

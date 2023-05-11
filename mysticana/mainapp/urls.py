@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('services/', views.ServicesView.as_view(), name='services'),
+    path('services/<pk>', views.ServiceDetailView.as_view(), name='service_detail'),
     path('news/', views.NewsView.as_view(), name='news'),
     path('news/<pk>/', views.NewsDetailView.as_view(), name='news_detail'),
 ]
