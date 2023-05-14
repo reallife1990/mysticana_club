@@ -1,6 +1,7 @@
 from django.forms import ModelForm, DateInput, TimeField, TimeInput, TextInput
 from crispy_forms.helper import FormHelper
 from workplaceapp.models import MainClients
+from mainapp.models import Services
 
 # форма для добавления нового клиента
 class AddClientForm(ModelForm):
@@ -20,3 +21,18 @@ class AddClientForm(ModelForm):
         self.helper.form_class = 'form-horizontal text-color="red"'
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8 text-primary'
+
+
+class ServiceChangeForm(ModelForm):
+
+    class Meta:
+        model = Services
+        fields = (
+            'title',
+            'preamble',
+            'body',
+            'image',
+            'price',
+            'length_time',
+            'deleted'
+        )

@@ -1,5 +1,5 @@
 from django.db import models
-
+# from workplaceapp.models import ServiceClients
 # Create your models here.
 from mysticana import settings
 
@@ -22,11 +22,23 @@ class BasicData(models.Model):
         abstract = True
 
 
-class News(BasicData):
+class FormatService(models.Model):
+    """
+    форматы консультаций
+    """
+    type_of = models.CharField(max_length=100, verbose_name='Формат')
+    description = models.TextField(verbose_name='Описание')
 
+    def __str__(self):
+        return f'{self.type_of}'
+
+    class Meta:
+        verbose_name = 'Формат консультации'
+        verbose_name_plural = 'Форматы консультаций'
+class News(BasicData):
+    """Новости"""
     title = models.CharField(max_length=100, verbose_name='Заголовок')
     preamble = models.CharField(max_length=256, verbose_name='Вступление')
-
     body = models.TextField(verbose_name='Содержание')
     body_as_markdown = models.BooleanField(default=False, verbose_name="Разметка")
     image = models.ImageField(blank=True, upload_to="images/news/", verbose_name="Картинка")
@@ -40,15 +52,22 @@ class News(BasicData):
 
 
 class Services(BasicData):
+    """Услуги"""
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     preamble = models.CharField(max_length=256, verbose_name='Вступление')
-
     body = models.TextField(verbose_name='Описание')
     body_as_markdown = models.BooleanField(default=False, verbose_name="Разметка")
     image = models.ImageField(blank=True, upload_to="photo/services/", verbose_name = "Картинка")
-
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Стоимость', default=0)
+    length_time = models.CharField(max_length=256, verbose_name='Продолжительность', null=True)
+    formats = models.ManyToManyField(FormatService, verbose_name='Формат проведения',)
 
+
+    @property
+    def get_count(self):
+        """количество проведённых консультаций"""
+        count = self.objects.f(ser = self.pk)
+        pass
     def __str__(self):
         return f'{self.title}'
 

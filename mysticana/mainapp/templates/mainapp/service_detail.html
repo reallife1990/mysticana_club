@@ -10,14 +10,13 @@
 
          <h5 class="card-header">Услуги</h5>
       <div class="card-body">
-        <h5 class="card-title text-center">{{object.title}}</h5>
+        <h3 class="card-title text-center">{{object.title}}</h3>
         <h6 class="card-subtitle mb-2 text-muted">{{object.created_at}}</h6>
         <div class="clearfix">
           {%if object.image%}
           <img class="img-resize pr-md-3 pb-3 float-md-left" src="{{object.image.url}}" style="max-width:300px">
           {%endif%}
           <p class="h4">{{object.body}}</p>
-          <p class="h4">{{page_obj.paginator.page_range}}</p>
         </div>
 
       </div>
@@ -30,12 +29,28 @@
         </div>
       </div>
     </div>
-
-
-
-
   </div>
 
+  <div class="col-lg-4">
+    <div class="card my-2 sticky-top">
+      <div class="card-header">
+        {{object.title}}
+      </div>
+      <div class="card-body">
+        <h5>Всего проведённых консультаций</h5>
+        <h5>Формат
+          {% for i in object.formats.all%}
+          <li> - {{i}}</li>
+          {%endfor%}
+          </h5>
+        <h5>Продолжительность  {{object.length_time}}</h5>
+        <h5>Стоимость {{object.price}}$</h5>
+        <h5>Отзывы:{{count}}</h5>
+        <h5>Смотреть другие</h5>
+        <h5>Записаться</h5>
+      </div>
+    </div>
+  </div>
 
 
 </div>

@@ -1,23 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
-from django.conf import settings
-from django.core.mail import send_mail
-
-
-# Create your views here.
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
-# Create your views here.
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from datetime import datetime, date
+from mainapp.models import Services
 from .utils import DrawGraph
 #@login_required
-from mysticana import settings
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseRedirect
-from workplaceapp.forms import AddClientForm
+from workplaceapp.forms import AddClientForm, ServiceChangeForm
 from workplaceapp.models import MainClients
 
 
@@ -47,6 +37,7 @@ class MainView(ControlAccess, TemplateView):
 class ShowAllClientsView(ControlAccess,ListView):
     template_name = 'workplaceapp/clients_list.html'
     model = MainClients
+    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -58,7 +49,6 @@ class ShowClientView(ControlAccess, DetailView):
     template_name = 'workplaceapp/clients_detail.html'
     model = MainClients
 
-    #print(MainClients.object.born_date)
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()
@@ -83,3 +73,23 @@ class AddClientView(ControlAccess,CreateView):
     # { % url
     # 'workplaceapp:client_detail'
     # pk = client.pk %}
+
+class AllServicesView(ControlAccess, ListView):
+    model = Services
+    template_name = 'workplaceapp/services_list.html'
+    paginate_by = 8
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        return context_data
+
+
+class EditServicesView(ControlAccess,UpdateView):
+    model = Services
+    template_name = 'workplaceapp/service_edit.html'
+    form_class = ServiceChangeForm
+
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
+        return reverse_lazy('workplaceapp:all_services')

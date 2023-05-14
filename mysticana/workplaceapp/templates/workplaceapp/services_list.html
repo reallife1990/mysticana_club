@@ -1,0 +1,86 @@
+{% extends 'workplaceapp/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+
+  <div class="col-lg-8">
+    {%for service in object_list%}
+
+    <div class="card mb-3" >
+      <div class="row no-gutters">
+        <div class="col-md-3">
+           {% if service.image %}
+                <img class="ml-2 mt-2" width="130px" src="{{service.image.url}}">
+                {% else %}
+                <img class="ml-2 mt-2" width="130px" src="{% static 'img/no_photo.png' %}">
+                {% endif%}
+        </div>
+        <div class="col-md-4">
+          <div class="card-body">
+            <h5 class="card-title">{{service.title}}</h5>
+            <h6 class="card-subtitle">Кратко: {{service.preamble}}
+
+            </h6>
+            <a href="{% url 'workplaceapp:edit_service' service.pk %}" class="card-link">Редактировать</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card-body">
+              Дата: {{service.updated_at}}
+              <br>
+              Статус:{%if service.deleted%}
+                Не активна
+                {%else%}
+                Активна
+                {%endif%}
+              <br>
+              Всего проведено:{{service.service_of.count}}
+            </h6>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+      {%endfor%}
+  </div>
+
+
+
+
+  <div class="col-lg-4">
+    <div class="card my-2 sticky-top">
+      <div class="card-header">
+        Фильтры
+      </div>
+      <div class="card-body">
+        <form action="">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Дата от...</span>
+            </div>
+            <input type="date" class="form-control" name="dateFrom">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Дата до...</span>
+            </div>
+            <input type="date" class="form-control" name="dateTo">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Фильтровать</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%if page_obj.paginator.num_pages != 1 %}
+  {%include 'mainapp/includes/inc_paginator.html'%}
+{%endif%}
+
+
+
+
+{% endblock %}
