@@ -5,40 +5,45 @@
 <div class="row">
 
   <div class="col-lg-8">
-    {%for client in object_list%}
+    {%for news in object_list%}
 
     <div class="card mb-3" >
       <div class="row no-gutters">
         <div class="col-md-3">
-           {% if client.photo %}
-                <img class="ml-2 mt-2" width="130px" src="{{client.photo.url}}">
+           {% if news.image %}
+                <img class="ml-2 mt-2" width="130px" src="{{news.image.url}}">
                 {% else %}
                 <img class="ml-2 mt-2" width="130px" src="{% static 'img/no_photo.png' %}">
                 {% endif%}
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
           <div class="card-body">
-            <h5 class="card-title">{{client.first_name}} {{client.last_name}}</h5>
-            <h6 class="card-subtitle">Возраст: {{client.age}}
-              <br>
-              Дата рождения:{{client.born_date|date:"d.m.Y"}}
+            <h5 class="card-title">{{news.title}}</h5>
+            <h6 class="card-subtitle">Кратко: {{news.preamble}}
+
             </h6>
-            <p class="card-text mt-2">
-              Город: {{client.city}}<br>
-              Регистрация: {{client.date_created}}<br>
-              Проведено консультаций:{{client.client_of.count}}
-            </p>
-            <a href="{% url 'workplaceapp:client_detail' pk=client.pk %}" class="card-link">Подробнее</a>
+            <a href="{% url 'workplaceapp:edit_news' news.pk %}" class="card-link">Редактировать</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card-body">
+              Создана: {{news.created_at}}
+              <br>
+              Обновлена: {{news.updated_at}}
+              <br>
+
+            </h6>
+
 
           </div>
         </div>
       </div>
     </div>
-    {%endfor%}
-
-
-
+      {%endfor%}
   </div>
+
+
+
 
   <div class="col-lg-4">
     <div class="card my-2 sticky-top">

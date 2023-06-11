@@ -14,6 +14,8 @@
                 {% else %}
                 <img class="w-100 p-2 mt-2" src="{% static 'img/no_photo.png' %}">
                 {% endif%}
+
+
             </div>
             <div class="w-65 mx-4">
                 <!--            Сводка по клиенту-->
@@ -155,6 +157,25 @@
         </div>
         <div class="card-body">
             {% include 'workplaceapp/includes/table_pifagora.html' %}
+        </div>
+        <div class="card-body">
+            <p class="h3">Проведённые консультации: {{object.client_of.count}}</p>
+            <table class="table h5">
+                <tr>
+                    <td>Дата</td>
+                    <td>Консультация</td>
+                    <td>Комментарий</td>
+                </tr>
+             {% for i in object.client_of.all%}
+                    <tr>
+                    <td>{{i.date}}</td>
+                    <td><a href = "{% url 'mainapp:service_detail' i.service.pk %}">{{i.service}}</a></td>
+                    <td>{{i.comment}}</td>
+                </tr>
+
+                {% endfor %}
+
+            </table>
         </div>
 
     </div>

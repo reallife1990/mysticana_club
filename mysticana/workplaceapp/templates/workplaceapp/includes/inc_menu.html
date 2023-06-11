@@ -21,7 +21,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'workplaceapp:all_services' %}">Все услуги</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Добавить услугу</a>
+                            <a class="dropdown-item" href="{% url 'workplaceapp:add_services' %}">Добавить услугу</a>
                             </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -45,9 +45,9 @@
                             Новости
                         </a>
                         <div class="dropdown-menu" aria-labelledby="ddNews">
-                            <a class="dropdown-item" href="#">К списку</a>
+                            <a class="dropdown-item" href="{% url 'workplaceapp:all_news' %}">К списку</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Добавить новость</a>
+                            <a class="dropdown-item" href="{% url 'workplaceapp:add_news' %}">Добавить новость</a>
                         </div>
                     </li>
 

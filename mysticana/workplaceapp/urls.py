@@ -11,8 +11,13 @@ urlpatterns = [
     path('clients/', views.ShowAllClientsView.as_view(), name='all_clients'),
 
     path('client/<uuid:pk>', views.ShowClientView.as_view(), name='client_detail'),
-    path('add_client', views.AddClientView.as_view(), name='add_client'),
+    path('client/add', views.AddClientView.as_view(), name='add_client'),
 
     path('services/', views.AllServicesView.as_view(), name='all_services'),
+    path('services/add', views.AddServiceView.as_view(), name='add_services'),
     path('services/<int:pk>', views.EditServicesView.as_view(), name='edit_service'),
+
+    path('news/', views.AllNewsView.as_view(), name='all_news'),
+    path('news/<int:pk>', views.EditNewsView.as_view(), name='edit_news'),
+    path('news/add', views.AddNewsView.as_view(), name='add_news'),
 ]

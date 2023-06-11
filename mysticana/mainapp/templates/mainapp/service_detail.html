@@ -37,7 +37,7 @@
         {{object.title}}
       </div>
       <div class="card-body">
-        <h5>Всего проведённых консультаций</h5>
+        <h5>Всего проведённых консультаций: {{object.service_of.count}}</h5>
         <h5>Формат
           {% for i in object.formats.all%}
           <li> - {{i}}</li>

@@ -2,13 +2,13 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from datetime import datetime, date
-from mainapp.models import Services
+from mainapp.models import Services, News
 from .utils import DrawGraph
 #@login_required
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseRedirect
-from workplaceapp.forms import AddClientForm, ServiceChangeForm
-from workplaceapp.models import MainClients
+from workplaceapp.forms import AddClientForm, ServiceChangeForm, ServiceAddForm, NewsForm
+from workplaceapp.models import MainClients, ServiceClients
 
 
 class ControlAccess(AccessMixin):
@@ -93,3 +93,51 @@ class EditServicesView(ControlAccess,UpdateView):
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
         return reverse_lazy('workplaceapp:all_services')
+
+class AddServiceView(ControlAccess,CreateView):
+    model = MainClients
+    template_name =  'workplaceapp/service_add.html'
+    form_class = ServiceAddForm
+    # success_url = reverse_lazy('workplaceapp:client_detail/', pk=)
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
+        print(self.request.POST['pk']) # пролучили ид
+        # way = self.request.POST['id']
+        return reverse_lazy('mainapp:services', )
+        # return reverse('workplaceapp:client_detail', pk=way)
+
+    # { % url
+    # 'workplaceapp:client_detail'
+    # pk = client.pk %}
+
+class AllNewsView(ControlAccess, ListView):
+    model = News
+    template_name = 'workplaceapp/news_list.html'
+    paginate_by = 8
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        return context_data
+
+class EditNewsView(ControlAccess,UpdateView):
+    model = News
+    template_name = 'workplaceapp/news_edit.html'
+    form_class = NewsForm
+
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
+        return reverse_lazy('workplaceapp:all_services')
+
+class AddNewsView(ControlAccess,CreateView):
+    model = News
+    template_name =  'workplaceapp/news_add.html'
+    form_class = NewsForm
+    # success_url = reverse_lazy('workplaceapp:client_detail/', pk=)
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
+        # print(self.request.POST['pk']) # пролучили ид
+        # way = self.request.POST['id']
+        return reverse_lazy('mainapp:news', )

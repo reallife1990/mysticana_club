@@ -12,7 +12,9 @@
 
                     <div class="card-body">
                       <div class="img-wrap">
+                          {%if service.image %}
                         <img src={{service.image.url}} class="img-responsive card-img">
+                          {%endif%}
                         <h3>{{service.title}}</h3>
 
                      </div>

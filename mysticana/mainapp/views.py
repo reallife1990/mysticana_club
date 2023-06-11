@@ -16,7 +16,7 @@ class ServicesView(ListView):
     #  отображение услуг
     template_name = "mainapp/services_list.html"
     model = Services
-    paginate_by = 2
+    paginate_by = 6
 
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
