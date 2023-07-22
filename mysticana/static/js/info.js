@@ -195,3 +195,26 @@ function AutoScaleTable()
 // console.log("123456")
 // };
 })()
+
+
+function blockForm(f) {
+    // Проверка на заполненность даты
+    let textarea = f.datein.value;
+    console.log(textarea.length);
+    if (textarea.length != 0){f.submit.disabled=0;}
+    else{f.submit.disabled=1;}
+}
+
+function blockForm2(f) {
+    // Проверка на заполненность даты
+    let textarea2 = f.txt.value;
+    console.log(textarea2.length);
+    if (textarea2.length != 0){f.submit.disabled=0;}
+    else{f.submit.disabled=1;}
+}
+
+   //
+   //  if (f.datein.value == null) f.submit.disabled = 0
+   // //if (f.matrix2.checked) f.submit.disabled = 0
+   //  // В противном случае вновь блокируем кнопку
+   //  else f.submit.disabled = 1}

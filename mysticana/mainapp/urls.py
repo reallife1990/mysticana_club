@@ -13,4 +13,6 @@ urlpatterns = [
     path('services/<pk>', views.ServiceDetailView.as_view(), name='service_detail'),
     path('news/', views.NewsView.as_view(), name='news'),
     path('news/<pk>/', views.NewsDetailView.as_view(), name='news_detail'),
+    path('profile/', views.AddProfileView.as_view(), name='add_profile'),
+    path('profile/', views.AddProfileView.as_view(), name='edit_profile'),
 ]

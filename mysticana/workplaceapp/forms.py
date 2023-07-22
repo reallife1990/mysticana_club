@@ -1,6 +1,8 @@
+from uuid import uuid4
+
 from django.forms import ModelForm, DateInput, TimeField, TimeInput, TextInput
 from crispy_forms.helper import FormHelper
-from workplaceapp.models import MainClients
+from workplaceapp.models import MainClients, ServiceClients
 from mainapp.models import Services, News
 
 
@@ -22,6 +24,7 @@ class AddClientForm(ModelForm):
         self.helper.form_class = 'form-horizontal text-color="red"'
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8 text-primary'
+
 
 
 class ServiceChangeForm(ModelForm):
@@ -49,3 +52,21 @@ class NewsForm(ModelForm):
     class Meta:
         model = News
         fields = '__all__'
+
+
+
+"Добавление консультации"
+class AddClientService(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        # фильтрация только активных услуг
+        super(AddClientService, self).__init__(*args, **kwargs)
+        self.fields['service'].queryset = Services.objects.filter(deleted=False)
+
+    class Meta:
+        model = ServiceClients
+        fields =('date','service','price','comment')
+        widgets = {
+            'date': DateInput(attrs={'type': 'date', 'align': 'center'}),
+            # 'comment': TextInput(attrs={'width': '100%', 'class':'col-md-12'})
+        }

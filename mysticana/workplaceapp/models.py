@@ -7,15 +7,13 @@ from datetime import datetime, timezone
 from .utils import Reduction, Calculate, TablePifagora
 from mainapp.models import Services
 
-
-
 class MainClients(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4)
     first_name = models.CharField(max_length=25, verbose_name='Имя')
     last_name = models.CharField(max_length=25, blank=True, verbose_name='Фамилия')
     city = models.CharField(max_length=20, blank=True, verbose_name="Город")
     photo = models.ImageField(blank=True, upload_to="photo/clients/", verbose_name="Фото")
-    born_date = models.DateField(blank=True, verbose_name="Дата рождения")
+    born_date = models.DateField(blank=False, verbose_name="Дата рождения")
     born_time = models.TimeField(null=True, blank=True, verbose_name="Время рождения")
     date_created = models.DateTimeField(default=datetime.now(), verbose_name="Дата добавления")
     telephone = models.CharField(max_length=15, blank=True, verbose_name="Телефон")
@@ -25,7 +23,8 @@ class MainClients(models.Model):
     instagram = models.CharField(max_length=50, blank=True, verbose_name="Instagram")
     vk = models.CharField(max_length=50, blank=True, verbose_name="ВК")
     comment = models.TextField(blank=True, verbose_name="Комментарий")
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Пользователь")
+
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Пользователь", related_name='client')
 
     # произвольное вычисляемое поле толькодля отбражения и внутренних дел
     #  с базой не взаимодействует
@@ -85,10 +84,11 @@ class ServiceClients(models.Model):
     ''' оказанные услуги
      поле related_name  для создания обратной связи между моделями'''
     id = models.UUIDField(primary_key=True, default=uuid4)
-    client = models.ForeignKey(MainClients, on_delete =models.CASCADE, verbose_name='Клиент', null=True, related_name='client_of')
-    service = models.ForeignKey(Services, on_delete =models.CASCADE, verbose_name='Услуга', null=True, related_name='service_of')
+    client = models.ForeignKey(MainClients, on_delete=models.CASCADE, verbose_name='Клиент', null=True, related_name='client_of')
+    service = models.ForeignKey(Services, on_delete=models.CASCADE, verbose_name='Услуга', null=True, related_name='service_of')
     date = models.DateField(default=datetime.now(), verbose_name='Дата')
     comment = models.TextField(blank=True, verbose_name='Комментарий')
+    price = models.IntegerField(blank=True, verbose_name='Цена', null=True)
 
     # @admin.display(description="Client_name")
     # def client_name(self):
@@ -97,16 +97,6 @@ class ServiceClients(models.Model):
     class Meta:
         verbose_name= 'Оказанная услуга'
         verbose_name_plural = 'Оказанные услуги'
-#     title = models.CharField( max_length=100, blank=False, null=False, verbose_name='Название')
-#     description = models.TextField(blank=False, null=False, verbose_name='Описание' )
-#     text = models.TextField(verbose_name='Полное описание')
-#     created_at = models.DateField(auto_now_add=datetime.now(), verbose_name="Дата добавления")
-#     updated_at = models.DateField(auto_now=datetime.now(), verbose_name='Дата изменения')
-#     is_active = models.BooleanField(default=True, verbose_name='Активна')
-#     price = models.CharField(max_length=30, blank= False, null=False, verbose_name='Стоимость')
-#
-#     @admin.display(description='Услуга')
-#     def admin_name(self):
-#         return f'{self.title}'
+
 
 

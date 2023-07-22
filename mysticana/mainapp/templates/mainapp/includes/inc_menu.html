@@ -34,13 +34,18 @@
                             {%else%}
                             <a class="dropdown-item" href="{% url 'authapp:edit' pk=request.user.pk %}">Редактировать профиль</a>
                             {%endif%}
-                            {%if user.is_client == False%}
-                            <a class="dropdown-item" href="#">Стать клиентом</a>
+                            {%if user.client%}
+                            <a class="dropdown-item" href="{% url 'mainapp:edit_profile'%}">Изменить данные клиента</a>
+                            {%else%}
+                            <a class="dropdown-item" href="{% url 'mainapp:add_profile'%}">Стать клиентом</a>
+
                             {%endif%}
                             <a class="dropdown-item" href="#">Мои курсы</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Модерация</a>
+                            {% if user.is_staff%}
                             <a class="dropdown-item" href="{% url 'admin:index'%}">Административный раздел</a>
+                            {% endif%}
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'authapp:logout'%}">Выход</a>
                         </div>

@@ -1,6 +1,8 @@
 {% extends 'workplaceapp/base.html' %}
 {% load static %}
+{% load crispy_forms_tags%}
 {% block content %}
+
 
 <div class="row">
 
@@ -143,13 +145,8 @@
                     </td>
                 </tr>
             </table>
-
-<!--            <h6 class="card-subtitle mb-2 text-muted">{{object.date_created}}</h6>-->
-<!--            <p class="card-text">{{object.info}}</p>-->
-<!--            <p class="card-text">{{object.age}}</p>-->
-<!--            <a href="{% url 'mainapp:index' %}" class="card-link">Подробнее</a>-->
-
         </div>
+
         <div>
             {% if img %}
             <img src="data:image/png;base64, {{img|safe}}" class="container">
@@ -158,8 +155,39 @@
         <div class="card-body">
             {% include 'workplaceapp/includes/table_pifagora.html' %}
         </div>
+
+        <div class="card-body collapse" id="Cl">
+
+                 <p class="h3 text-center"> Новая консультация</p>
+            <form method="POST">
+
+                 {% csrf_token %}
+                <div class="form-group">
+  {{form|crispy}}
+                </div>
+
+    <p>
+        <button type="submit"
+                class="btn btn-primary btn-block">Зарегистрироваться
+        </button>
+    </p>
+            </form>
+        </div>
         <div class="card-body">
+           <div class="container">
+           <div class="row">
+               <div class="col">
             <p class="h3">Проведённые консультации: {{object.client_of.count}}</p>
+               </div>
+               <div class="col text-right">
+            <button class="btn btn-primary" type="button"
+                            data-toggle="collapse" data-target="#Cl"
+                            aria-expanded="false" aria-controls="Cl">
+                        Добавить новую консультацию
+                    </button>
+               </div>
+           </div>
+           </div>
             <table class="table h5">
                 <tr>
                     <td>Дата</td>
@@ -188,3 +216,17 @@
 
 
 {% endblock %}
+
+{%block js%}
+<!-- Toasts -->
+<script>
+$(document).ready(function () {
+{% if messages %}
+// Toasts
+$(".toast").toast({ delay: 12000 });
+$(".toast").toast("show");
+{% endif %}
+});
+
+</script>
+{%endblock%}

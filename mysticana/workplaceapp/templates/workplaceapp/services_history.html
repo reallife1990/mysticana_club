@@ -1,0 +1,60 @@
+{% extends 'workplaceapp/base.html' %}
+{% load static %}
+{% block content %}
+<p class="h4 text-center">{{ period }} <br> Всего {{ object_list.count }} консультаций</p>
+<div class="row">
+
+  <div class="col-lg-8">
+    <div class="card mb-3" >
+       <table class="table">
+            <tr class="h5"><td>Дата</td><td>Клиент</td><td>Консультация</td><td>Комментарий</td></tr>
+            {%for service in object_list%}
+                <tr class="text-dark font-italic font-weight-bold"><td>{{ service.date }}</td><td>{{ service.client }}</td><td>{{ service.service }}</td><td>{{ service.comment }}</td></tr>
+            {% endfor %}
+       </table>
+    </div>
+  </div>
+
+
+
+
+  <div class="col-lg-4">
+{#      <div class="card my-2 sticky-top">#}
+{#      <div class="card-header">#}
+{#          {{ object_list.count }}#}
+{#      </div>#}
+{#      </div>#}
+    <div class="card my-2 sticky-top">
+      <div class="card-header h4">
+        Выборка за период
+      </div>
+      <div class="card-body">
+        <form action="">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Дата от...</span>
+            </div>
+            <input type="date" class="form-control" name="dateFrom">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Дата до...</span>
+            </div>
+            <input type="date" class="form-control" name="dateTo">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Фильтровать</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%if page_obj.paginator.num_pages != 1 %}
+  {%include 'mainapp/includes/inc_paginator.html'%}
+{%endif%}
+
+
+
+
+{% endblock %}
