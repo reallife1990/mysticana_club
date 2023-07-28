@@ -150,7 +150,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 2525
 EMAIL_HOST_USER = "mysticana_club@mail.ru"
-EMAIL_HOST_PASSWORD = "AQGve1bAwtZL6h6n4je6"
+EMAIL_HOST_PASSWORD = "QYpGzsGdqbTuPFaBQQSL"
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 #errors send

@@ -24,4 +24,5 @@ urlpatterns = [
     path('news/add', views.AddNewsView.as_view(), name='add_news'),
 
     path('express/', views.ExpressCalcChangeView.as_view(), name='express_begin'),
+    path('express/result/', views.ExpressCalcResultView.as_view(), name='express_result'),
 ]

@@ -40,29 +40,140 @@
 
   </div>
 
-  <div class="col-lg-4">
+  <div class="col-lg-4 ">
     <div class="card my-2 sticky-top">
-      <div class="card-header">
-        Фильтры
+              <div class="card-header">
+        Выборки клиентов
       </div>
-      <div class="card-body">
-        <form action="">
-          <div class="input-group mb-3">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+         <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="forname-tab" data-toggle="tab" href="#forname" role="tab" aria-controls="forname" aria-selected="true">По имени</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="forage-tab" data-toggle="tab" href="#forage" role="tab" aria-controls="forage" aria-selected="false">По возрасту</a>
+         </li>
+         <li class="nav-item" role="presentation">
+         <a class="nav-link" id="sort-tab" data-toggle="tab" href="#sort" role="tab" aria-controls="sort" aria-selected="false">Сортировка</a>
+          </li>
+        </ul>
+
+
+<div class="tab-content card-body" id="myTabContent">
+  <div class="tab-pane fade show active" id="forname" role="tabpanel" aria-labelledby="forname-tab">
+       <form action="">
+          <div class="input mb-3 mt-2">
+              <p class="h5">Имя/Фималия</p>
+               <input type="text" class="form-control " name="search">
+
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Поиск</button>
+        </form>
+  </div>
+
+  <div class="tab-pane fade" id="forage" role="tabpanel" aria-labelledby="forage-tab">
+              <form action="">
+          <div class="input-group mb-3 mt-2">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Дата от...</span>
+              <span class="input-group-text" id="basic-addon1">Возраст от...</span>
             </div>
-            <input type="date" class="form-control" name="dateFrom">
+            <input type="number" class="form-control" name="ageAt">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Дата до...</span>
+              <span class="input-group-text" id="basic-addon1">Возраст до...</span>
             </div>
-            <input type="date" class="form-control" name="dateTo">
+            <input type="number" class="form-control" name="ageTo">
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block">Фильтровать</button>
+          <button type="submit" class="btn btn-primary btn-block">Показать</button>
         </form>
-      </div>
+  </div>
+
+    <div class="tab-pane fade" id="sort" role="tabpanel" aria-labelledby="sort-tab">
+
+
+      <form action="">
+
+          <div class="form-check">
+              <input class="form-check-input" type="radio" value="reg"  name="types" id="type1" checked>
+              <label class="form-check-label" for="type1">По дате регистрации</label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio" value="serv" name="types" id="type2" >
+              <label class="form-check-label" for="type2">По количеству консультаций </label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio" value="born" name="types" id="type3" >
+              <label class="form-check-label" for="type3">По дате рождения </label>
+          </div>
+
+         <div class="container">
+         <div class="form-check">
+              <input class="form-check-input" type="radio"  value="up" name="sort" id="sortUp">
+              <label class="form-check-label" for="sortUp"> По возрастанию </label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio"  value="down" name="sort" id="sortDown" checked>
+              <label class="form-check-label" for="sortDown"> По убыванию </label>
+          </div>
+         </div>
+
+             <button  class="btn btn-success" type="submit">Сортировать</button>
+         </form>
+    </div>
+</div>
+
+
+
+
+
+{#      <div class="card-header">#}
+{#        Фильтры сортировки#}
+{#      </div>#}
+{#      <div class="card-body">#}
+{#          <button type="" id="u">123</button>#}
+{#        <form action="">#}
+{#          <div class="input-group mb-3">#}
+{#            <div class="input-group-prepend">#}
+{#              <span class="input-group-text" id="basic-addon1">Дата от...</span>#}
+{#            </div>#}
+{#            <input type="date" class="form-control" name="dateFrom">#}
+{#          </div>#}
+{#          <div class="input-group mb-3">#}
+{#            <div class="input-group-prepend">#}
+{#              <span class="input-group-text" id="basic-addon1">Дата до...</span>#}
+{#            </div>#}
+{#            <input type="date" class="form-control" name="dateTo">#}
+{#          </div>#}
+{##}
+{#          <button type="submit" class="btn btn-primary btn-block">Фильтровать</button>#}
+{#        </form>#}
+{#      </div>#}
+{#<br>#}
+{##}
+{##}
+{#      <div class="card-header">#}
+{#        Фильтры#}
+{#      </div>#}
+{#      <div class="card-body">#}
+{#        <form action="">#}
+{#          <div class="input-group mb-3">#}
+{#            <div class="input-group-prepend">#}
+{#              <span class="input-group-text" id="basic-addon1">Дата от...</span>#}
+{#            </div>#}
+{#            <input type="date" class="form-control" name="dateFrom">#}
+{#          </div>#}
+{#          <div class="input-group mb-3">#}
+{#            <div class="input-group-prepend">#}
+{#              <span class="input-group-text" id="basic-addon1">Дата до...</span>#}
+{#            </div>#}
+{#            <input type="date" class="form-control" name="dateTo">#}
+{#          </div>#}
+{##}
+{#          <button type="submit" class="btn btn-primary btn-block">Фильтровать</button>#}
+{#        </form>#}
+{#      </div>#}
     </div>
   </div>
 </div>

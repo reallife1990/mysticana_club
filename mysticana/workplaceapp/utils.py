@@ -62,7 +62,10 @@ class Calculate:
             (result.get('num_char') - result.get('method'))
              ))  # проблема воплощения
 
-        if datetime.now().year - self.year == age:
+        # print(datetime.now().year)
+        # print(self.year)
+        # print(age)
+        if datetime.now().year - self.year == int(age.split(' ')[0]):
             # солярный год
             result['sol_year'] = Reduction.std(result.get("expr") +
                                                Reduction.std(datetime.now().year))
@@ -71,6 +74,82 @@ class Calculate:
                                                Reduction.std((datetime.now().year)-1))
 
         return result
+
+    @staticmethod
+    def age(born_date):
+        """
+        born_date - формат datetime
+        :return: возраст клиента
+        """
+        years = datetime.now().year - born_date.year
+        if datetime.now().month < born_date.month or \
+                (datetime.now().month == born_date.month and
+                 datetime.now().day < born_date.day):
+            years -= 1
+        txt = ''
+        if (years % 10 == 1 and years != 11):
+            txt = 'год'
+        elif(years % 10 in [2,3,4]):
+            txt = 'года'
+        else:
+            txt = 'лет'
+        return f'{years} {txt}'
+
+    def karm_way(self):
+        data=Calculate.main_table(self, Calculate.age(self))
+        borders=(36 - data['karm'],36 - data['karm']+27)
+        periods={}
+        periods[f"0-{borders[0]}"] = data['way']
+        periods[f"{borders[0]}-{borders[1]}"] = data['num_char']
+        periods[f"{borders[1]} - 100"] = data['method']
+        events=[]
+        events.append((borders[0], data['expr']))
+        events.append((borders[0]+9, Reduction.std(data['num_char']+data['method'])))
+        events.append((borders[0]+18, Reduction.std(events[0][1] + events[1][1])))
+        events.append((borders[0]+27, Reduction.std(data['way']+data['method'])))
+        print(periods,events)
+        return {'periods':periods,'events':events}
+    @staticmethod
+    def words_in_number(value):
+        n = 0
+        value = value.replace(' ', '')  # Убираем пробелы
+        value = value.replace('-', '')  # Убираем тире
+        value = value.replace('_', '')  # Убираем нижн.подчёрк
+        if value.isalnum():
+            value = value.lower()
+            for i in value:
+                if type(i) is str:
+                    if i in ('a', 'i', 'j', 'q', 'y', 'а', 'к', 'у', 'ь', '1'):
+                        n = n + 1
+                        # print(1)
+                    elif i in ('b', 'k', 'r', 'б', 'л', 'ф', 'ю', '2'):
+                        n = n + 2
+                        # print(2)
+                    elif i in ('c', 'g', 'l', 's', 'в', 'м', 'х', 'я', '3'):
+                        n = n + 3
+                        # print(3)
+                    elif i in ('d', 'm', 't', 'г', 'н', 'ц', 'ё', '4'):
+                        n = n + 4
+                        # print(4)
+                    elif i in ('e', 'h', 'n', 'x', 'д', 'о', 'ч', '5'):
+                        n = n + 5
+                        # print(5)
+                    elif i in ('u', 'v', 'w', 'е', 'п', 'ш', 'э', '6'):
+                        n = n + 6
+                        # print(6)
+                    elif i in ('o', 'z', 'ж', 'р', 'щ', '7'):
+                        n = n + 7
+                        # print(7)
+                    elif i in ('f', 'p', 'з', 'с', 'ъ', '8'):
+                        n = n + 8
+                        # print(8)
+                    elif i in ('и', 'й', 'т', 'ы', '9'):
+                        n = n + 9
+                        # print(9)
+                    else:
+                        print('oops')
+        print(Reduction.std(n))
+        return Reduction.std(n)
 
 class DrawGraph:
 
@@ -94,7 +173,7 @@ class DrawGraph:
             result['sy'].append(int(i))
         for i in vol:
             result['vol'].append(int(i))
-        print(result)
+        # print(result) проверочка
         return result
 
     @staticmethod
@@ -114,7 +193,7 @@ class DrawGraph:
         vol = d.get('vol')
         sy = d.get('sy')
         now = int(age.split(' ')[0])
-        print(vol, sy, now)
+        # print(vol, sy, now)
         x = [0, 12, 24, 36, 48, 60, 72]
         plt.switch_backend('AGG') # запись в файл
         fig, ax = plt.subplots()
@@ -199,12 +278,9 @@ class TablePifagora():
                 table_dict[k]=str(v) * volume
         conv=f'{table_dict.pop(16)}/{table_dict.pop(17)}'
         table_dict[16]=conv
-        print(table_dict) #{1: 1, 2: 3, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 3, 9: 1}
+        # print(table_dict) #{1: 1, 2: 3, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 3, 9: 1}
         # TablePifagora.special_values(table_dict)
         return table_dict
-
-
-
 
     def data_answer(self):
         NAMES = ['', 'Характер', 'Энергия', 'Интерес',
@@ -222,7 +298,7 @@ class TablePifagora():
             for elem in rule:
                 row.append({'elem':elem, 'name': NAMES[elem],'data':DATA[elem]})
             data_table.append(row)
-        print(data_table)
+        # print(data_table)
         answ = {"work_numb": WORK_NUMB[:4], "data": data_table, '4gp':WORK_NUMB[4]}
         return answ
 
@@ -249,3 +325,4 @@ class TablePifagora():
     def date_to_str(self):
         str_date = str(self.day) + str(self.month) + str(self.year)
         return str_date
+

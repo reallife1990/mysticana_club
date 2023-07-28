@@ -218,3 +218,31 @@ function blockForm2(f) {
    // //if (f.matrix2.checked) f.submit.disabled = 0
    //  // В противном случае вновь блокируем кнопку
    //  else f.submit.disabled = 1}
+
+
+
+// const myModal = document.getElementById('check')
+// const myInput = document.getElementById('res')
+//
+// myModal.addEventListener('shown.bs.modal', () => {
+//   myInput.focus()
+// })
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // при клике на #btn
+    $('#calc').click(function () {
+        // $('#modal') – модальное окно, которое нужно открыть
+        $('#modal').modal('show');
+    });
+
+});
+
+    //
+    // <!-- Кнопка -->
+    // <button type="button" className="btn btn-primary" id="btn">Открыть</button>
+    //
+    // <!-- Модальное окно -->
+    // <div id="modal" className="modal fade"> ...</div>

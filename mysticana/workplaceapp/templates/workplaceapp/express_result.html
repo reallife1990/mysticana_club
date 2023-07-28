@@ -1,0 +1,30 @@
+{% extends 'workplaceapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags%}
+{% block content %}
+<h3 class="text-center"> Экспресс-расчёт по дате {{ date }} </h3>
+<div class="card">
+{% if main_tbl %}
+{% include 'workplaceapp/includes/express/main_table.html' %}
+{% endif %}
+
+  <div class="card-body">
+         <div>
+            {% if img %}
+            <img src="data:image/png;base64, {{img|safe}}" class="container">
+            {% endif %}
+        </div>
+  </div>
+
+{% if pifagor %}
+       <div class="card-body">
+            {% include 'workplaceapp/includes/express/tbl_pifagora.html' %}
+        </div>
+{% endif %}
+
+{% if way %}
+    <div class="card-body">
+    {% include 'workplaceapp/includes/express/tbl_way.html' %}
+    </div>
+{% endif %}
+{% endblock %}

@@ -47,8 +47,14 @@ class MainClients(models.Model):
             txt = 'года'
         else:
             txt = 'лет'
+        # print(years)
         return f'{years} {txt}'
 
+    # @property
+    # @admin.display(description='Во')
+    # def serv_count(self):
+    #     q= ServiceClients.filter(client_of=self.id).count()
+    #     return q
     @property
     def info(self):
         """
@@ -57,10 +63,6 @@ class MainClients(models.Model):
         """
 
         d = {}
-        d['a'] = Reduction.std(self.born_date.year)
-        d['b'] = Reduction.for_pi(self.born_date.year)
-        d['c'] = Reduction.for_pi_limit(self.born_date.year)
-        d['d'] = {"re":20}
         d['main_tbl'] = Calculate.main_table(self.born_date, self.age)
         d['work_numbers'] = TablePifagora.work_numbers(self.born_date)
         d['pifagor'] = TablePifagora.data_answer(self.born_date)

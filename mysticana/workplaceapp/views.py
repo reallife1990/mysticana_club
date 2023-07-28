@@ -1,4 +1,7 @@
 from uuid import uuid4
+
+from django.core.paginator import Paginator
+from django.db.models import Count, Q
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
@@ -7,7 +10,7 @@ from datetime import datetime, date
 from django.views.generic.edit import ModelFormMixin
 
 from mainapp.models import Services, News
-from .utils import DrawGraph
+from .utils import DrawGraph, Calculate, TablePifagora
 #@login_required
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseRedirect
@@ -40,11 +43,49 @@ class MainView(ControlAccess, TemplateView):
 class ShowAllClientsView(ControlAccess,ListView):
     template_name = 'workplaceapp/clients_list.html'
     model = MainClients
-    paginate_by = 8
+    paginate_by = 5
+
+    # ф-ция сохранения сортировки
+    def get_filter_params(self):
+        params = ''
+        for k, v in dict(self.request.GET).items():
+            if k != 'page':
+                params = params + f'&{k}={v[0]}'
+        print(params)
+        return params
+
+    def get_queryset(self):
+        lst = dict(self.request.GET).keys()
+        print(lst)
+        if self.request.GET.get('sort'):
+            p = '-' if self.request.GET.get('sort') == 'down' else ''
+            if self.request.GET.get('types') == 'reg':
+                qs = MainClients.objects.order_by(f'{p}date_created')
+            elif self.request.GET.get('types') == 'born':
+                qs = MainClients.objects.order_by(f'{p}born_date')
+            elif self.request.GET.get('types') == 'serv':
+                qs = MainClients.objects.annotate(sc=Count('client_of')).order_by(f'{p}sc')
+            # print(so,ty)
+        # self.kwargs['at'], self.kwargs['to'] = self.request.GET.get('dateFrom'), self.request.GET.get('dateTo')
+        elif self.request.GET.get('search'):
+            qs = MainClients.objects.filter(Q(first_name__contains=self.request.GET.get('search')) | Q(last_name__contains=self.request.GET.get('search')))
+
+
+        else:
+            qs = MainClients.objects.order_by('-photo')
+
+
+        return qs
+
 
     def get_context_data(self, **kwargs):
+        # txt = str(self.request).split('?')[1][:-2]
+        # print(txt)
+        # print(self.request.GET)
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()
+        context_data['sort_list'] = self.get_filter_params()
+
         return context_data
 
 
@@ -62,7 +103,6 @@ class ShowClientView(ControlAccess, DetailView, ModelFormMixin):
         context_data['date_now'] = datetime.now()
         context_data['img'] = DrawGraph.get_plot(context_data['mainclients'].born_date,
                                                  context_data['mainclients'].age)
-
         return context_data
 
     def post(self, request, *args, **kwargs):
@@ -87,9 +127,6 @@ class AddClientView(ControlAccess,CreateView):
         return reverse_lazy('workplaceapp:client_detail', kwargs={'pk': way})
         # return reverse('workplaceapp:client_detail', pk=way)
 
-    # { % url
-    # 'workplaceapp:client_detail'
-    # pk = client.pk %}
 
 class AllServicesView(ControlAccess, ListView):
     model = Services
@@ -113,14 +150,12 @@ class EditServicesView(ControlAccess,UpdateView):
 
 class AddServiceView(ControlAccess,CreateView):
     model = MainClients
-    template_name =  'workplaceapp/service_add.html'
+    template_name ='workplaceapp/service_add.html'
     form_class = ServiceAddForm
     # success_url = reverse_lazy('workplaceapp:client_detail/', pk=)
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
-        print(self.request.POST['pk']) # пролучили ид
-        # way = self.request.POST['id']
         return reverse_lazy('mainapp:services', )
         # return reverse('workplaceapp:client_detail', pk=way)
 
@@ -134,7 +169,7 @@ class HistoryServicesView(ControlAccess,ListView):
     # выборка консультаций по промежутку времени
     def get_queryset(self):
         self.kwargs['at'], self.kwargs['to'] = self.request.GET.get('dateFrom'), self.request.GET.get('dateTo')
-        print(self.kwargs)
+        # print(self.kwargs)
         if self.kwargs.get('at') and self.kwargs.get('to'):
             at = datetime.strptime(self.kwargs.get('at'), "%Y-%m-%d")
             to = datetime.strptime(self.kwargs.get('to'), "%Y-%m-%d")
@@ -156,11 +191,12 @@ class HistoryServicesView(ControlAccess,ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        print(self.kwargs)
+        # print(self.kwargs)
         context_data['period'] = f'Список консультаций {self.kwargs["period"]}'
 
         return context_data
 
+#Все новости
 class AllNewsView(ControlAccess, ListView):
     model = News
     template_name = 'workplaceapp/news_list.html'
@@ -176,7 +212,6 @@ class EditNewsView(ControlAccess,UpdateView):
     template_name = 'workplaceapp/news_edit.html'
     form_class = NewsForm
 
-
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
         return reverse_lazy('workplaceapp:all_news')
@@ -190,9 +225,50 @@ class AddNewsView(ControlAccess,CreateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Данные успешно обновлены')
-        # print(self.request.POST['pk']) # пролучили ид
-        # way = self.request.POST['id']
         return reverse_lazy('workplaceapp:all_news')
 
+
+#Экспресс расчёт выбор
 class ExpressCalcChangeView(ControlAccess,TemplateView):
     template_name = 'workplaceapp/express_calculate.html'
+
+    def get_queryset(self):
+        # self.kwargs['at'], self.kwargs['to'] = self.request.GET.get('dateFrom'), self.request.GET.get('dateTo')
+        print(self.request.GET)
+
+    def get_context_data(self, **kwargs):
+        # print(self.request.GET)
+        context_data = super().get_context_data(**kwargs)
+        # context_data['date'] = self.request.GET.get('datein')
+        if (self.request.GET.get('txt')):
+            context_data['result']=Calculate.words_in_number(self.request.GET.get('txt'))
+            context_data['txt'] = self.request.GET.get('txt')
+            print(context_data)
+        return context_data
+
+# экспресс расчёт
+class ExpressCalcResultView(ControlAccess,TemplateView):
+    template_name = 'workplaceapp/express_result.html'
+
+    def get_queryset(self):
+        # self.kwargs['at'], self.kwargs['to'] = self.request.GET.get('dateFrom'), self.request.GET.get('dateTo')
+        print(self.kwargs.__dict__)
+    def get_context_data(self, **kwargs):
+        # print(self.request.GET)
+        context_data = super().get_context_data(**kwargs)
+        context_data['date'] = self.request.GET.get('datein')
+        print(self.request.GET)
+        date_for = datetime.strptime(self.request.GET.get('datein'),"%Y-%m-%d")
+        #график
+        if self.request.GET.get('scale'):
+            context_data['img'] = DrawGraph.get_plot(date_for, Calculate.age(date_for))
+        if self.request.GET.get('vid'):
+            context_data['main_tbl']=Calculate.main_table(date_for, Calculate.age(date_for))
+        if self.request.GET.get('matrix'):
+            context_data['work_numbers'] = TablePifagora.work_numbers(date_for)
+            context_data['pifagor'] = TablePifagora.data_answer(date_for)
+        if self.request.GET.get('way'):
+            context_data['way'] = Calculate.karm_way(date_for)
+        print(Calculate.words_in_number('12'))
+        return context_data
+
