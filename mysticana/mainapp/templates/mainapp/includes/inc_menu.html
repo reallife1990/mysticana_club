@@ -35,7 +35,7 @@
                             <a class="dropdown-item" href="{% url 'authapp:edit' pk=request.user.pk %}">Редактировать профиль</a>
                             {%endif%}
                             {%if user.client%}
-                            <a class="dropdown-item" href="{% url 'mainapp:edit_profile'%}">Изменить данные клиента</a>
+                            <a class="dropdown-item" href="{% url 'mainapp:edit_profile' pk=request.user.pk %}">Изменить данные клиента</a>
                             {%else%}
                             <a class="dropdown-item" href="{% url 'mainapp:add_profile'%}">Стать клиентом</a>
 

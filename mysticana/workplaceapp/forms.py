@@ -65,8 +65,9 @@ class AddClientService(ModelForm):
 
     class Meta:
         model = ServiceClients
-        fields =('date','service','price','comment')
+        fields =('client','date','service','price','comment')
         widgets = {
             'date': DateInput(attrs={'type': 'date', 'align': 'center'}),
-            # 'comment': TextInput(attrs={'width': '100%', 'class':'col-md-12'})
+            'client' : TextInput(attrs={'type':'hidden'})
+
         }

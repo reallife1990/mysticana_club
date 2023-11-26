@@ -1,0 +1,28 @@
+<div class="card-body">
+<table class="text-center" border="1px" style="width: 100%">
+    <tr><td colspan="4" class="tbl_value" bgcolor="yellow">Кармический путь</td></tr>
+     <tr class="pifagor-name"><td  width="50%">Периоды</td><td>События</td></tr>
+    <tr><td>
+        <table class="tbl_value text-center" border="1px" style="width: 100%" >
+            {% for k, v in way.periods.items %}
+                <tr>
+                    <td class="work_nums" width="50%">{{ k }} лет</td>
+                    <td>{{ v }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </td>
+    <td>
+        <table class="tbl_value text-center" border="1px" style="width: 100%">
+            {% for l in way.events %}
+                <tr>
+                    <td class="work_nums"  width="50%">{{ l.0}} лет</td>
+                    <td>{{ l.1}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </td>
+    </tr>
+
+</table>
+</div>

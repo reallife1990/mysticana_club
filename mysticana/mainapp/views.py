@@ -1,14 +1,16 @@
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.shortcuts import render
 
-# Create your views here.
+
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, DetailView, ListView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView
 
 from authapp.models import User
 from mainapp.forms import NewClientForm
-# Create your views here.
+
 from mainapp.models import News, Services
 from workplaceapp.models import ServiceClients, MainClients
 
@@ -91,7 +93,7 @@ class NewsDetailView(TemplateView):
 
 
 class AddProfileView(CreateView):
-    '''просмотр услуги'''
+    '''стать клиентом'''
     template_name = 'mainapp/get_profile.html'
     model = MainClients
     form_class = NewClientForm
@@ -112,3 +114,37 @@ class AddProfileView(CreateView):
         # context_data['first_name'] =self.request.user.first_name
 
         return context_data
+
+    def get_success_url(self):
+        self.change_client_status()
+        messages.add_message(self.request, messages.SUCCESS, 'Поздравляем! Вы стали клиентом!')
+        return reverse_lazy('mainapp:index')
+
+    def change_client_status(self):
+        user = User.objects.get(id=self.request.user.id)
+        user.is_client = True
+        user.save()
+
+
+
+
+
+class EditProfileView(UpdateView):
+    '''стать клиентом'''
+    template_name = 'mainapp/get_profile.html'
+    model = MainClients
+    form_class = NewClientForm
+
+
+    def get_object(self, queryset=None):
+        print(self.kwargs.get('pk')) # ограничение на редактирование только своего профиля
+        res=MainClients.objects.get(user_id=self.kwargs.get('pk'))
+        print(res.pk)
+        return MainClients.objects.get(id=res.pk)
+        # return self.request.user
+
+    # def get_queryset(self):
+    #     return super().get_queryset().get(user_id=self.kwargs.get('pk'))
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)

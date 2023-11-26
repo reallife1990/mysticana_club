@@ -1,0 +1,21 @@
+<div class="card-body">
+<p class="work_nums"> Рабочие числа: {%for numb in pifagor.work_numb %}{{numb}},  {%endfor%}
+<br> ЧЖП: {{pifagor.4gp}}</p>
+<table border="1px" style="width: 100%">
+    <tr><td colspan="4" align="center" class="tbl_value" bgcolor="yellow">Психоматрица Пифагора</td></tr>
+    {% for row in pifagor.data %}
+    <tr>
+        {% for sq in row%}
+
+            <td class="pifagor-sq {% if sq.elem > 9 %} yellow {% endif %}">
+                <span class="pifagor-name">{{sq.name}}</span>
+                <br>
+                <span class="pifagor-val">{{sq.data }}</span>
+                {{stb}}
+
+            </td>
+        {%endfor%}
+    </tr>
+    {%endfor%}
+</table>
+</div>

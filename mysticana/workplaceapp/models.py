@@ -50,11 +50,7 @@ class MainClients(models.Model):
         # print(years)
         return f'{years} {txt}'
 
-    # @property
-    # @admin.display(description='Во')
-    # def serv_count(self):
-    #     q= ServiceClients.filter(client_of=self.id).count()
-    #     return q
+
     @property
     def info(self):
         """

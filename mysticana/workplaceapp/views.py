@@ -1,7 +1,6 @@
 from uuid import uuid4
-
 from django.core.paginator import Paginator
-from django.db.models import Count, Q
+from django.db.models import Count, Q, F, Subquery
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
@@ -45,18 +44,49 @@ class ShowAllClientsView(ControlAccess,ListView):
     model = MainClients
     paginate_by = 5
 
+    @staticmethod
+    def get_text_sort(params):
+        lst = list(params.split('&')[1:])
+        # print(len(lst))
+        types = {'types':'Сортировка:', 'sort':' ','serv': 'Консультации', 'reg': 'Дата регистрации', 'born': 'Дата рождения',
+        'up':'( по возрастанию)', 'down':'( по убыванию)','ageAt':'C ', 'ageTo':' по ', 'search':' Выборка по тексту:'}
+
+        filter_text = ''
+        if len(lst) > 0:
+            d = {}
+            for i in lst:
+                d[i.split('=')[0]] = i.split('=')[1]
+            print(d)
+            for k,v in d.items():
+                print(k,v)
+                if k in ['ageAt']:
+                    filter_text+='Выборка по годам рождения '
+                if types.get(k) and v !='':
+                    print(k)
+                    filter_text+=types.get(k)
+                    if types.get(v):
+                        filter_text+=types.get(v)
+                    else:
+                        filter_text+= v
+                else:
+                    print('notfound')
+        # print(filter_text)
+        return filter_text
+
+
     # ф-ция сохранения сортировки
     def get_filter_params(self):
         params = ''
         for k, v in dict(self.request.GET).items():
             if k != 'page':
                 params = params + f'&{k}={v[0]}'
-        print(params)
+        # print(params)
+        self.get_text_sort(params)
         return params
 
     def get_queryset(self):
         lst = dict(self.request.GET).keys()
-        print(lst)
+        # сортировка выбором
         if self.request.GET.get('sort'):
             p = '-' if self.request.GET.get('sort') == 'down' else ''
             if self.request.GET.get('types') == 'reg':
@@ -66,25 +96,28 @@ class ShowAllClientsView(ControlAccess,ListView):
             elif self.request.GET.get('types') == 'serv':
                 qs = MainClients.objects.annotate(sc=Count('client_of')).order_by(f'{p}sc')
             # print(so,ty)
-        # self.kwargs['at'], self.kwargs['to'] = self.request.GET.get('dateFrom'), self.request.GET.get('dateTo')
+        # по части имени фамилии
         elif self.request.GET.get('search'):
-            qs = MainClients.objects.filter(Q(first_name__contains=self.request.GET.get('search')) | Q(last_name__contains=self.request.GET.get('search')))
-
-
+            qs = MainClients.objects.filter(Q(first_name__contains=self.request.GET.get('search')) |
+                                            Q(last_name__contains=self.request.GET.get('search')))
+        # сортировка по году рождения
+        elif self.request.GET.get('ageAt') or self.request.GET.get('ageTo'):
+            if self.request.GET.get('ageAt') and not self.request.GET.get('ageTo'):
+                qs = MainClients.objects.filter(born_date__year__gte=self.request.GET.get('ageAt'))
+            elif self.request.GET.get('ageTo') and not self.request.GET.get('ageAt'):
+                qs = MainClients.objects.filter(born_date__year__lte=self.request.GET.get('ageTo'))
+            else:
+                qs = MainClients.objects.filter(Q(born_date__year__gte=self.request.GET.get('ageAt')) &
+                                                Q(born_date__year__lte=self.request.GET.get('ageTo')))
         else:
             qs = MainClients.objects.order_by('-photo')
-
-
         return qs
 
-
     def get_context_data(self, **kwargs):
-        # txt = str(self.request).split('?')[1][:-2]
-        # print(txt)
-        # print(self.request.GET)
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()
         context_data['sort_list'] = self.get_filter_params()
+        context_data['filter_text'] = self.get_text_sort(self.get_filter_params())
 
         return context_data
 
@@ -95,9 +128,7 @@ class ShowClientView(ControlAccess, DetailView, ModelFormMixin):
     form_class = AddClientService
 
     def get_context_data(self, **kwargs):
-        self.initial ={'client': MainClients.objects.get(id=self.object.id),
-                       'id': uuid4(),
-                      }
+        self.initial ={'client': MainClients.objects.get(id=self.object.id),'id': uuid4(),}
 
         context_data = super().get_context_data(**kwargs)
         context_data['date_now'] = datetime.now()
@@ -107,12 +138,22 @@ class ShowClientView(ControlAccess, DetailView, ModelFormMixin):
 
     def post(self, request, *args, **kwargs):
         form = AddClientService(self.request.POST)
+        # print(form)
         if form.is_valid():
             form.save()
-            messages.add_message(self.request, messages.INFO, 'Консультация успешно обновлена')
-            # возвращаемся на ту же страницу
-            return HttpResponseRedirect(reverse_lazy('workplaceapp:client_detail',
-                                                     kwargs={'pk':self.request.POST['client']}))
+            r=messages.INFO
+            txt='Консультация успешно обновлена'
+            # messages.add_message(self.request, messages.INFO, 'Консультация успешно обновлена')
+            # # возвращаемся на ту же страницу
+            # return HttpResponseRedirect(reverse_lazy('workplaceapp:client_detail',
+            #                                          kwargs={'pk' : self.request.POST['client']}))
+        else:
+            form.clean()
+            r=messages.ERROR
+            txt="ошибка"
+        messages.add_message(self.request, r, txt)
+        return HttpResponseRedirect(reverse_lazy('workplaceapp:client_detail',
+                                                 kwargs={'pk': self.request.POST['client']}))
 
 class AddClientView(ControlAccess,CreateView):
     model = MainClients
@@ -125,7 +166,7 @@ class AddClientView(ControlAccess,CreateView):
         print(self.request.POST['id']) # пролучили ид
         way = self.request.POST['id']
         return reverse_lazy('workplaceapp:client_detail', kwargs={'pk': way})
-        # return reverse('workplaceapp:client_detail', pk=way)
+
 
 
 class AllServicesView(ControlAccess, ListView):
@@ -243,7 +284,7 @@ class ExpressCalcChangeView(ControlAccess,TemplateView):
         if (self.request.GET.get('txt')):
             context_data['result']=Calculate.words_in_number(self.request.GET.get('txt'))
             context_data['txt'] = self.request.GET.get('txt')
-            print(context_data)
+            # print(context_data)
         return context_data
 
 # экспресс расчёт
@@ -258,7 +299,7 @@ class ExpressCalcResultView(ControlAccess,TemplateView):
         context_data = super().get_context_data(**kwargs)
         context_data['date'] = self.request.GET.get('datein')
         print(self.request.GET)
-        date_for = datetime.strptime(self.request.GET.get('datein'),"%Y-%m-%d")
+        date_for = datetime.strptime(self.request.GET.get('datein'), "%Y-%m-%d")
         #график
         if self.request.GET.get('scale'):
             context_data['img'] = DrawGraph.get_plot(date_for, Calculate.age(date_for))
@@ -269,6 +310,6 @@ class ExpressCalcResultView(ControlAccess,TemplateView):
             context_data['pifagor'] = TablePifagora.data_answer(date_for)
         if self.request.GET.get('way'):
             context_data['way'] = Calculate.karm_way(date_for)
-        print(Calculate.words_in_number('12'))
+        # print(Calculate.words_in_number('12'))
         return context_data
 

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="913501fa-9093-493b-b747-8c442224b228" name="Changes" comment="'экспресс расчёты+выборка по имени+ сортировка'">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/e81bffb6-6d72-4148-8b82-22e1afb0e265.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/geek.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/media/images/news/22-22-13.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/static/img/ico.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/workplaceapp/migrations/0012_alter_mainclients_born_date_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/workplaceapp/migrations/0013_serviceclients_price_alter_mainclients_date_created_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/workplaceapp/templates/workplaceapp/includes/express/main_table.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/workplaceapp/templates/workplaceapp/includes/express/tbl_pifagora.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysticana/workplaceapp/templates/workplaceapp/includes/express/tbl_way.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mysticana_club.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mysticana_club.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/mainapp/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/mainapp/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/mainapp/templates/mainapp/includes/inc_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/mainapp/templates/mainapp/includes/inc_menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/mainapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/mainapp/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/mainapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/mainapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/mysticana/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/mysticana/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/req.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/workplaceapp/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/workplaceapp/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/workplaceapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/workplaceapp/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/workplaceapp/templates/workplaceapp/clients_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/workplaceapp/templates/workplaceapp/clients_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysticana/workplaceapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysticana/workplaceapp/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="432b8363-05bf-4d03-bcb6-9c4067079c02" />
+        <option name="url" value="https://github.com/reallife1990/mysticana_club.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2SeufZX9PCK1MmSsza0I81LhcQL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/my_club/mysticana_club/mysticana/static/img",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\my_club\mysticana_club\mysticana\static\img" />
+      <recent name="D:\my_club\mysticana_club\mysticana\workplaceapp\templates\workplaceapp\includes\express" />
+      <recent name="D:\my_club\mysticana_club\mysticana\workplaceapp\templates\workplaceapp" />
+      <recent name="D:\my_club\mysticana_club" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\my_club\mysticana_club\mysticana\static\img" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mysticana_club" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mysticana" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mysticana/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="913501fa-9093-493b-b747-8c442224b228" name="Changes" comment="" />
+      <created>1689519471619</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1689519471619</updated>
+      <workItem from="1689519483510" duration="605000" />
+      <workItem from="1689535214780" duration="3794000" />
+      <workItem from="1689592871573" duration="14553000" />
+      <workItem from="1689712120378" duration="5788000" />
+      <workItem from="1689788802145" duration="10569000" />
+      <workItem from="1689873171430" duration="8301000" />
+      <workItem from="1689950910212" duration="4753000" />
+      <workItem from="1690043601498" duration="15766000" />
+      <workItem from="1690104266023" duration="29309000" />
+      <workItem from="1690293022642" duration="17937000" />
+      <workItem from="1690568458859" duration="7951000" />
+      <workItem from="1690826064652" duration="7139000" />
+      <workItem from="1691085271880" duration="4706000" />
+      <workItem from="1691842627046" duration="9515000" />
+      <workItem from="1691859103992" duration="9023000" />
+      <workItem from="1693055587604" duration="162000" />
+      <workItem from="1693157424427" duration="634000" />
+      <workItem from="1693850726648" duration="2714000" />
+      <workItem from="1693856855930" duration="804000" />
+      <workItem from="1693861894565" duration="16000" />
+      <workItem from="1693932672884" duration="108000" />
+      <workItem from="1693941050715" duration="3329000" />
+      <workItem from="1694015223445" duration="8000" />
+      <workItem from="1694015302324" duration="595000" />
+      <workItem from="1695315884201" duration="1257000" />
+      <workItem from="1701004762378" duration="1260000" />
+    </task>
+    <task id="LOCAL-00001" summary="'экспресс расчёты начало'">
+      <created>1690063128777</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1690063128777</updated>
+    </task>
+    <task id="LOCAL-00002" summary="'экспресс расчёты+выборка по имени+ сортировка'">
+      <created>1690576452403</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1690576452403</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="'экспресс расчёты начало'" />
+    <MESSAGE value="'экспресс расчёты+выборка по имени+ сортировка'" />
+    <option name="LAST_COMMIT_MESSAGE" value="'экспресс расчёты+выборка по имени+ сортировка'" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mysticana/workplaceapp/forms.py</url>
+          <line>20</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mysticana/workplaceapp/forms.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/venv/Lib/site-packages/django/views/generic/list.py</url>
+          <line>14</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mysticana/workplaceapp/views.py</url>
+          <line>105</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/mysticana_club$views.coverage" NAME="views Coverage Results" MODIFIED="1689713289674" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mysticana/workplaceapp" />
+    <SUITE FILE_PATH="coverage/mysticana_club$test.coverage" NAME="test Coverage Results" MODIFIED="1691852497717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mysticana" />
+  </component>
+</project>

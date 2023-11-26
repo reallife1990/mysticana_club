@@ -16,7 +16,7 @@ class NewClientForm(ModelForm):
             'born_date': DateInput(attrs={'type':'date', 'align':'center'}),
             'born_time': TimeInput(attrs={'type':'time'}),
             'id': TextInput(attrs={'type':'hidden'}),
-            'first_name': TextInput(attrs={'readonly':'readonly', 'label':'hhgvudh'}),
+            'first_name': TextInput(attrs={'readonly':'readonly', 'label':'thtrhtrhtrh'}),
             'last_name': TextInput(attrs={'readonly':'readonly', 'type':'hidden'}),
             'user': TextInput(attrs={'type':'hidden'})
         }

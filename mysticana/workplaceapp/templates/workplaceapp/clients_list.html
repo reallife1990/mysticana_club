@@ -1,7 +1,7 @@
 {% extends 'workplaceapp/base.html' %}
 {% load static %}
 {% block content %}
-
+    <p class="h3 text-center text-light">{{ filter_text }}</p>
 <div class="row">
 
   <div class="col-lg-8">
@@ -42,16 +42,25 @@
 
   <div class="col-lg-4 ">
     <div class="card my-2 sticky-top">
-              <div class="card-header">
-        Выборки клиентов
-      </div>
-
+        <div class="card-header container">
+          <div class="row">
+            <div class="col  ">
+              Выборки клиентов
+            </div>
+              <div class="col">
+                <form action="">
+                  <button type="submit" class="btn btn-danger btn-block btn-sm"
+                          href="{% url 'workplaceapp:all_clients' %}" {% if not sort_list %} disabled{% endif %}>Сброс</button>
+                </form>
+              </div>
+          </div>
+        </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
          <li class="nav-item" role="presentation">
         <a class="nav-link active" id="forname-tab" data-toggle="tab" href="#forname" role="tab" aria-controls="forname" aria-selected="true">По имени</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="forage-tab" data-toggle="tab" href="#forage" role="tab" aria-controls="forage" aria-selected="false">По возрасту</a>
+          <a class="nav-link" id="forage-tab" data-toggle="tab" href="#forage" role="tab" aria-controls="forage" aria-selected="false">По году рождения</a>
          </li>
          <li class="nav-item" role="presentation">
          <a class="nav-link" id="sort-tab" data-toggle="tab" href="#sort" role="tab" aria-controls="sort" aria-selected="false">Сортировка</a>
@@ -63,7 +72,7 @@
   <div class="tab-pane fade show active" id="forname" role="tabpanel" aria-labelledby="forname-tab">
        <form action="">
           <div class="input mb-3 mt-2">
-              <p class="h5">Имя/Фималия</p>
+              <p class="h5">Имя/Фамилия</p>
                <input type="text" class="form-control " name="search">
 
           </div>
@@ -75,13 +84,13 @@
               <form action="">
           <div class="input-group mb-3 mt-2">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Возраст от...</span>
+              <span class="input-group-text" id="basic-addon1">Год от...</span>
             </div>
             <input type="number" class="form-control" name="ageAt">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Возраст до...</span>
+              <span class="input-group-text" id="basic-addon1">Год до...</span>
             </div>
             <input type="number" class="form-control" name="ageTo">
           </div>
